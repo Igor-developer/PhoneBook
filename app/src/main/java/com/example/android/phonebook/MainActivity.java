@@ -2,22 +2,20 @@ package com.example.android.phonebook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 public class MainActivity extends AppCompatActivity {
-//Занятие 2.
-//Создать приложение PhoneBook. В телефонную книгу можно добавлять контакт по имени и телефон.
-//Искать контакт нужно по имени.
-//После добавления контакта в список обязательно очищать поля ввода.
-//Ещё необходимо добавить текстовое поле с количеством контактов.
+//Занятие 3.
+//Модифицировать приложение PhoneBook - должно быть три Activity:
+//Activity 1 - в ней храним контакты и делаем поиск.
+//Activity 2 - в ней добавляем новые контакты.
+//Activity 3 - в ней показываем найденные контакты.
 
     private static Map<String, Set<String>> phones;
 
@@ -93,7 +91,10 @@ public class MainActivity extends AppCompatActivity {
                 findings.append(n++).append(") ").append(i).append(System.lineSeparator());
             }
 
-            notification_view.setText(findings.toString());
+            Intent intent = new Intent(this, FindingsActivity.class);
+            intent.putExtra("findings", findings.toString());
+            name_view.setText("");
+            startActivity(intent);
         } else {
             notification_view.setTextColor(getResources().getColor(R.color.red));
             notification_view.setText(getString(R.string.zero_person_phones, name));

@@ -16,4 +16,6 @@
     <string name="duplicate_phone">Этот номер уже есть в телефонной книге!</string>
     <string name="record_created">Запись (%1$s, %2$s) успешно добавлена!</string>
     <string name="zero_person_phones">Нет записей для %1$s</string>
+    <string name="back">Назад</string>
+
 </resources>
