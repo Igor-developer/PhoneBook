@@ -2,30 +2,20 @@ package com.example.android.phonebook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 public class MainActivity extends AppCompatActivity {
-//Занятие 3.
-//Модифицировать приложение PhoneBook - должно быть три Activity:
-//Activity 1 - в ней храним контакты и делаем поиск.
-//Activity 2 - в ней добавляем новые контакты.
-//Activity 3 - в ней показываем найденные контакты.
+//Занятие 4.
+//В приложение PhoneBook добавить RecyclerView, в которой будут отображаться все записи.
 
-    private static Map<String, Set<String>> phones;
-
-    public static Map getPhones() {
-        if (phones == null) {
-            phones = new TreeMap<>();
-        }
-
-        return phones;
-    }
+    AppCompatButton info_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Назначение слушателей кнопкам
+        info_button = findViewById(R.id.info_button);
+        info_button.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, RecyclerViewActivity.class));
+        });
+
         AppCompatButton searchButton = findViewById(R.id.search_button);
         searchButton.setOnClickListener(v -> handleSearchButton());
 
@@ -47,17 +42,18 @@ public class MainActivity extends AppCompatActivity {
 
     //Отображение количества телефонов
     private void showPhonesQuantity() {
-        int quantity = MainActivity.getPhones().size();
+        int quantity = Contacts.getContactsAsMap().size();
 
         String info_string;
         if (quantity == 0) {
             info_string = getString(R.string.zero_phones_quantity);
+            info_button.setEnabled(false);
         } else {
             info_string = getString(R.string.phones_quantity, quantity);
+            info_button.setEnabled(true);
         }
 
-        TextView info_view = findViewById(R.id.info);
-        info_view.setText(info_string);
+        info_button.setText(info_string);
     }
 
     //Обработчик для кнопки искать
@@ -67,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView notification_view = findViewById(R.id.notification);
 
-        Map<String, Set<String>> phones = MainActivity.getPhones();
+        Map<String, Set<String>> phones = Contacts.getContactsAsMap();
 
         //Заполнено ли поле поиска
         if (name.isEmpty()) {

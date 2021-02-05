@@ -1,6 +1,7 @@
 package com.example.android.phonebook;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -18,9 +19,6 @@ public class FindingsActivity extends AppCompatActivity {
         phone_numbers_view.setText(intent.getStringExtra("findings"));
 
         ImageButton backButton = findViewById(R.id.back_arrow);
-        backButton.setOnClickListener(v -> {
-            Intent intent2 = new Intent(FindingsActivity.this, MainActivity.class);
-            startActivity(intent2);
-        });
+        backButton.setOnClickListener(v -> finish());
     }
 }

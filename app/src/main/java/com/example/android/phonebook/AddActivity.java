@@ -2,16 +2,20 @@ package com.example.android.phonebook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class AddActivity extends AppCompatActivity {
+
+    AppCompatButton info_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,11 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
 
         //Назначение слушателей кнопкам
+        info_button = findViewById(R.id.info_button);
+        info_button.setOnClickListener(v -> {
+            startActivity(new Intent(AddActivity.this, RecyclerViewActivity.class));
+        });
+
         AppCompatButton addButton = findViewById(R.id.add_button);
         addButton.setOnClickListener(v -> handleAddButton());
 
@@ -33,17 +42,18 @@ public class AddActivity extends AppCompatActivity {
 
     //Отображение количества телефонов
     private void showPhonesQuantity() {
-        int quantity = MainActivity.getPhones().size();
+        int quantity = Contacts.getContactsAsMap().size();
 
         String info_string;
         if (quantity == 0) {
             info_string = getString(R.string.zero_phones_quantity);
+            info_button.setEnabled(false);
         } else {
             info_string = getString(R.string.phones_quantity, quantity);
+            info_button.setEnabled(true);
         }
 
-        TextView info_view = findViewById(R.id.info);
-        info_view.setText(info_string);
+        info_button.setText(info_string);
     }
 
     //Обработчик для кнопки добавить
@@ -56,7 +66,7 @@ public class AddActivity extends AppCompatActivity {
 
         TextView notification_view = findViewById(R.id.notification);
 
-        Map<String, Set<String>> phones = MainActivity.getPhones();
+        Map<String, Set<String>> phones = Contacts.getContactsAsMap();
 
         //Заполнены ли все поля и нет ли дубликатов
         if (name.isEmpty()) {
