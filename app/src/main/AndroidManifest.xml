@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PhoneBook">
         <activity android:name=".RecyclerViewActivity" />
-        <activity android:name=".FindingsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

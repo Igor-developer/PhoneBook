@@ -2,13 +2,16 @@ package com.example.android.phonebook;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -53,23 +56,30 @@ public class SearchFormFragment extends Fragment {
 
         //Поиск записи в телефонной книге
         if (phones.containsKey(name)) {
-            StringBuilder findings = new StringBuilder();
-            findings.append("Телефоны человека").append(System.lineSeparator())
-                    .append(name).append(":").append(System.lineSeparator())
+            StringBuilder findings = new StringBuilder()
+                    .append("Телефоны человека")
+                    .append(System.lineSeparator())
+                    .append(name)
+                    .append(":")
                     .append(System.lineSeparator());
 
             int n = 1;
             for (String i : phones.get(name)) {
-                findings.append(n++).append(") ").append(i).append(System.lineSeparator());
+                findings.append(n++)
+                        .append(") ")
+                        .append(i)
+                        .append(System.lineSeparator());
             }
 
-            Intent intent = new Intent(getActivity(), FindingsActivity.class);
-            intent.putExtra("findings", findings.toString());
-            name_view.setText("");
-            startActivity(intent);
+            notification_view.setTextColor(getResources().getColor(R.color.black));
+            notification_view.setText(findings.toString());
+
+            name_view.setText(R.string.space);
         } else {
             notification_view.setTextColor(getResources().getColor(R.color.red));
             notification_view.setText(getString(R.string.zero_person_phones, name));
+
+            name_view.setText(R.string.space);
         }
     }
 }

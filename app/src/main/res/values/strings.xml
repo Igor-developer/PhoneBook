@@ -5,7 +5,7 @@
     <string name="search_phone">Найти\nтелефон</string>
     <string name="name">Имя</string>
     <string name="phone">Телефон</string>
-    <string name="space"> </string>
+    <string name="space" />
     <string name="add_person">Добавить</string>
     <string name="search_person">Поиск по имени</string>
     <string name="search">Искать</string>
