@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".AddActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,19 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="8dp"
             android:text="@string/peoples_in_phone_book"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
-        <!-- Кнопки перехода между Activity -->
+        <!-- Кнопки перехода между фрагментами с формами -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/go_to_add_activity"
+                android:id="@+id/go_to_add_form"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -59,78 +59,10 @@
                 android:textSize="24sp" />
         </LinearLayout>
 
-        <!-- Форма ввода -->
-        <LinearLayout
+        <!-- Контейнер для фрагментов с формами -->
+        <FrameLayout
+            android:id="@+id/form_fragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_lilac"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/search_person"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:background="@color/white"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:hint="@string/space"
-                android:inputType="textPersonName"
-                android:textSize="24sp" />
-        </LinearLayout>
-
-        <!-- Форма уведомлений -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_lilac"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:id="@+id/notification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="20dp"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
-        </RelativeLayout>
-
-        <!-- Кнопка искать -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/light_lilac"
-            android:gravity="center|top"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/search_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="20dp"
-                android:background="@color/ultra_light_lilac"
-                android:enabled="true"
-                android:padding="10dp"
-                android:text="@string/search"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
-        </LinearLayout>
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </ScrollView>

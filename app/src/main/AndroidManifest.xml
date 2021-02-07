@@ -11,14 +11,11 @@
         android:theme="@style/Theme.PhoneBook">
         <activity android:name=".RecyclerViewActivity" />
         <activity android:name=".FindingsActivity" />
-        <activity android:name=".AddActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
