@@ -1,20 +1,17 @@
 package com.example.android.phonebook;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
-    List<Contacts.PreparedText> contacts;
 
-    public RecyclerViewAdapter(List<Contacts.PreparedText> contacts) {
-        this.contacts = contacts;
+    private final ContactsManager contactsManager;
+
+    public RecyclerViewAdapter() {
+        this.contactsManager = ContactsManager.getInstance();
     }
 
     //Накачиваем лейаут и создаём ViewHolder
@@ -31,13 +28,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //Заносим реальные данные в TextView элемента списка
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
-        holder.bind(contacts.get(position));
+        holder.bind(contactsManager.getEntry(position));
     }
 
     //В методе нужно указать количество элементов RecyclerView
     @Override
     public int getItemCount() {
-        return Contacts.getContactsAsList().size();
+        return contactsManager.getSize();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -52,9 +49,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         }
 
-        private void bind(Contacts.PreparedText contact) {
-            person.setText(contact.getPerson());
-            telephones.setText(contact.getTelephones());
+        private void bind(ContactsManager.Entry entry) {
+            person.setText(entry.getPerson());
+            telephones.setText(entry.getPhone());
         }
     }
 }

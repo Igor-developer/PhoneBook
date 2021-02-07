@@ -1,6 +1,5 @@
 package com.example.android.phonebook;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -11,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.Map;
-import java.util.Set;
 
 public class SearchFormFragment extends Fragment {
 
@@ -42,7 +38,7 @@ public class SearchFormFragment extends Fragment {
 
         TextView notification_view = getActivity().findViewById(R.id.notification);
 
-        Map<String, Set<String>> phones = Contacts.getContactsAsMap();
+        final ContactsManager contacts_manager = ContactsManager.getInstance();
 
         //Заполнено ли поле поиска
         if (name.isEmpty()) {
@@ -55,31 +51,18 @@ public class SearchFormFragment extends Fragment {
         }
 
         //Поиск записи в телефонной книге
-        if (phones.containsKey(name)) {
-            StringBuilder findings = new StringBuilder()
-                    .append("Телефоны человека")
-                    .append(System.lineSeparator())
-                    .append(name)
-                    .append(":")
-                    .append(System.lineSeparator());
-
-            int n = 1;
-            for (String i : phones.get(name)) {
-                findings.append(n++)
-                        .append(") ")
-                        .append(i)
-                        .append(System.lineSeparator());
-            }
-
+        if (contacts_manager.containsPerson(name)) {
             notification_view.setTextColor(getResources().getColor(R.color.black));
-            notification_view.setText(findings.toString());
+            notification_view.setText(getString(R.string.person_telephones,
+                                                name,
+                                                contacts_manager.getEntry(name).getPhone()));
 
-            name_view.setText(R.string.space);
         } else {
             notification_view.setTextColor(getResources().getColor(R.color.red));
             notification_view.setText(getString(R.string.zero_person_phones, name));
-
-            name_view.setText(R.string.space);
         }
+
+        //Затирание букв в поле поиска
+        name_view.setText(R.string.space);
     }
 }

@@ -4,13 +4,14 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.Map;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -43,7 +44,7 @@ public class AddFormFragment extends Fragment {
 
         TextView notification_view = getActivity().findViewById(R.id.notification);
 
-        Map<String, Set<String>> phones = Contacts.getContactsAsMap();
+        final ContactsManager contacts_manager = ContactsManager.getInstance();
 
         //Заполнены ли все поля и нет ли дубликатов
         if (name.isEmpty()) {
@@ -54,9 +55,10 @@ public class AddFormFragment extends Fragment {
             notification_view.setTextColor(getResources().getColor(R.color.red));
             notification_view.setText(R.string.empty_phone_field);
             return;
-        } else if (phones.containsKey(name) && phones.get(name).contains(phone)) {
+        } else if (contacts_manager.containsPerson(name)) {
             notification_view.setTextColor(getResources().getColor(R.color.red));
-            notification_view.setText(R.string.duplicate_phone);
+            notification_view.setText(contacts_manager.getEntry(name).getPhone().equals(phone) ?
+                            R.string.person_phone_exist : R.string.person_exist);
             return;
         } else {
             notification_view.setTextColor(getResources().getColor(R.color.black));
@@ -64,9 +66,7 @@ public class AddFormFragment extends Fragment {
         }
 
         //Добавление записи в телефонную книгу
-        Set<String> person_telephones = phones.containsKey(name) ? phones.get(name) : new TreeSet<>();
-        person_telephones.add(phone);
-        phones.put(name, person_telephones);
+        contacts_manager.addEntry(name, phone);
 
         //Очистка полей ввода
         name_view.setText("");

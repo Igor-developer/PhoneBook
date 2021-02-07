@@ -9,17 +9,14 @@ public class MainActivity extends AppCompatActivity {
 //Занятие 5.
 //В приложении PhoneBook реализовать «master detail flow» и фрагменты.
 
-    AppCompatButton info_button;
+    ContactsManager contactsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Назначение слушателя кнопке отображения количества записей
-        info_button = findViewById(R.id.info_button);
-        info_button.setOnClickListener(v ->
-           startActivity(new Intent(MainActivity.this, RecyclerViewActivity.class)));
+        contactsManager = ContactsManager.getInstance();
 
         //Создание фрагментов
         AddFormFragment add_form_fragment = AddFormFragment.newInstance();
@@ -27,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.form_fragment, search_form_fragment)
-                .addToBackStack(null)
                 .commit();
 
         //Назначение слушателей
@@ -55,12 +51,19 @@ public class MainActivity extends AppCompatActivity {
             go_to_search_form_button.setEnabled(false);
         });
 
+        //Обновление уведомления о количестве записей в телефонной книге
         showPhonesQuantity();
     }
 
     //Отображение количества телефонов
     void showPhonesQuantity() {
-        int quantity = Contacts.getContactsAsMap().size();
+        //Назначение слушателя кнопке отображения количества записей
+        AppCompatButton info_button = findViewById(R.id.info_button);
+        info_button.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this,
+                                          RecyclerViewActivity.class)));
+
+        int quantity = contactsManager.getSize();
 
         String info_string;
         if (quantity == 0) {

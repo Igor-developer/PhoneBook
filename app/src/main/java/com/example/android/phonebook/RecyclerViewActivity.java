@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Surface;
@@ -18,7 +17,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recycler_view);
 
         RecyclerView recyclerview = findViewById(R.id.recyclerview);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(Contacts.getContactsAsList());
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter();
         recyclerview.setAdapter(adapter);
 
         Display display = ((WindowManager) getSystemService(WINDOW_SERVICE))

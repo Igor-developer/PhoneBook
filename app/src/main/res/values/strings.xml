@@ -13,8 +13,10 @@
     <string name="phones_quantity">Людей в телефонной книге - %1$d</string>
     <string name="empty_name_field">Не заполнено поле имя!</string>
     <string name="empty_phone_field">Не заполнено поле телефон!</string>
-    <string name="duplicate_phone">Этот номер уже есть в телефонной книге!</string>
+    <string name="person_exist">Этот человек уже есть в телефонной книге!</string>
+    <string name="person_phone_exist">Этот человек и этот номер уже есть в телефонной книге!</string>
     <string name="record_created">Запись (%1$s, %2$s) успешно добавлена!</string>
     <string name="zero_person_phones">Нет записей для %1$s</string>
     <string name="back">Назад</string>
+    <string name="person_telephones">Телефон человека %1$s - %2$s</string>
 </resources>
