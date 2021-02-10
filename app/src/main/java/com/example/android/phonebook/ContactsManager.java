@@ -64,6 +64,10 @@ public final class ContactsManager {
         contactList.add(new Entry(name, phone));
     }
 
+    public void replace(int index, Entry replacement) {
+        contactList.set(index, replacement);
+    }
+
     //Внутренний класс, который содержит контакты человека
     public static class Entry {
         private String person;

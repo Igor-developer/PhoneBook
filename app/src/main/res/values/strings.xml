@@ -1,22 +1,28 @@
 <resources>
     <string name="app_name">PhoneBook</string>
-    <string name="peoples_in_phone_book">Людей в телефонной книге -</string>
     <string name="add_phone">Добавить\nтелефон</string>
     <string name="search_phone">Найти\nтелефон</string>
     <string name="name">Имя</string>
     <string name="phone">Телефон</string>
     <string name="space" />
     <string name="add_person">Добавить</string>
+    <string name="save_person">Сохранить</string>
+    <string name="clear">Очистить</string>
+    <string name="cancel">Отменить</string>
     <string name="search_person">Поиск по имени</string>
     <string name="search">Искать</string>
     <string name="zero_phones_quantity">В телефонной книге нет записей</string>
-    <string name="phones_quantity">Людей в телефонной книге - %1$d</string>
-    <string name="empty_name_field">Не заполнено поле имя!</string>
-    <string name="empty_phone_field">Не заполнено поле телефон!</string>
+    <string name="peoples_in_phone_book">Открыть все записи</string>
+    <string name="phones_quantity">Открыть все записи (%1$d)</string>
+    <string name="empty_fields">Не все поля заполнены!</string>
     <string name="person_exist">Этот человек уже есть в телефонной книге!</string>
     <string name="person_phone_exist">Этот человек и этот номер уже есть в телефонной книге!</string>
     <string name="record_created">Запись (%1$s, %2$s) успешно добавлена!</string>
     <string name="zero_person_phones">Нет записей для %1$s</string>
     <string name="back">Назад</string>
     <string name="person_telephones">Телефон человека %1$s - %2$s</string>
+    <string name="edit_entry">Редактировать запись</string>
+    <string name="delete_entry">Удалить запись</string>
+    <string name="call">Позвонить</string>
+    <string name="empty_name_field">Поле не заполнено!</string>
 </resources>

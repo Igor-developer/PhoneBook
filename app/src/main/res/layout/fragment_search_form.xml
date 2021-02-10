@@ -57,7 +57,6 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-    <!-- Кнопка искать -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -65,6 +64,8 @@
         android:gravity="center|top"
         android:orientation="vertical">
 
+
+        <!-- Кнопка искать -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/search_button"
             android:layout_width="wrap_content"

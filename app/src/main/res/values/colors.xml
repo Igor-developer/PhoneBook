@@ -8,8 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E41414</color>
-    <color name="light_green">#cdf0b2</color>
-    <color name="ultra_light_green">#f4fde7</color>
+    <color name="accent">#5263FF</color>
+    <color name="light_green">#CDF0B2</color>
+    <color name="ultra_light_green">#F4FDE7</color>
     <color name="light_lilac">#A6B5FF</color>
-    <color name="ultra_light_lilac">#dce6ff</color>
+    <color name="ultra_light_lilac">#DCE6FF</color>
 </resources>
