@@ -5,19 +5,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>
         implements AddFormFragment.ColorHighlighting {
 
-    RecyclerView recyclerView;
-    private final ContactsManager contactsManager;
+    private RecyclerView recyclerView;
+    private List<ContactsManager.Entry> contactList;
+    String request;
 
-    public RecyclerViewAdapter() {
-        this.contactsManager = ContactsManager.getInstance();
+    public RecyclerViewAdapter(String request) {
+        this.request = request;
+        updateContactList();
+    }
+
+    public void updateContactList() {
+        this.contactList = ContactsManager.getInstance().findEntries(request);
     }
 
     //Накачиваем лейаут и создаём ViewHolder
@@ -42,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //В методе нужно указать количество элементов RecyclerView
     @Override
     public int getItemCount() {
-        return contactsManager.getSize();
+        return contactList.size();
     }
 
     //Методы интерфейса AddFormFragment.ColorHighlighting по выделению выбранного элемента цветом
@@ -81,10 +88,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         private void bind(int position) {
 
-            ContactsManager.Entry entry = contactsManager.getEntry(position);
+            ContactsManager.Entry entry = contactList.get(position);
 
             person.setText(entry.getPerson());
             telephones.setText(entry.getPhone());
+            int original_index = entry.getListIndex();
 
             edit_button.setOnClickListener(v -> {
 
@@ -95,7 +103,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 AddFormFragment add_form_fragment = AddFormFragment.newInstance();
 
                 Bundle bundle = new Bundle();
-                bundle.putInt(AddFormFragment.KEY, position);
+                bundle.putInt(AddFormFragment.RECYCLERVIEW_POSITION, position);
+                bundle.putInt(AddFormFragment.ORIGINAL_INDEX, original_index);
                 add_form_fragment.setArguments(bundle);
                 context.getSupportFragmentManager()
                         .beginTransaction()

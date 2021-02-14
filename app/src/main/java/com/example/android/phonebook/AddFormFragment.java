@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +15,21 @@ import android.widget.Toast;
 
 public class AddFormFragment extends Fragment {
 
-    public static final String KEY = "KEY";
+    public static final String RECYCLERVIEW_POSITION = "RECYCLERVIEW_POSITION";
+    public static final String ORIGINAL_INDEX = "ORIGINAL_INDEX";
+    private int position;
+    private int originalIndex;
     private ContactsManager contactsManager;
     private RecyclerViewAdapter adapter;
-    private int index;
     private boolean isAttachedToRecyclerViewActivity;
     private EditText nameView;
     private EditText phoneView;
     private TextView notificationView;
-    private AppCompatButton addButton;
-    private AppCompatButton clearButton;
     private View darkening;
 
     public static AddFormFragment newInstance() {
-        AddFormFragment fragment = new AddFormFragment();
 
-        return fragment;
+        return new AddFormFragment();
     }
 
     //Извлечение аргументов
@@ -40,7 +38,8 @@ public class AddFormFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            index = getArguments().getInt(KEY);
+            position = getArguments().getInt(RECYCLERVIEW_POSITION);
+            originalIndex = getArguments().getInt(ORIGINAL_INDEX);
         }
     }
 
@@ -58,8 +57,8 @@ public class AddFormFragment extends Fragment {
         nameView = view.findViewById(R.id.name);
         phoneView = view.findViewById(R.id.phone);
         notificationView = view.findViewById(R.id.notification);
-        addButton = view.findViewById(R.id.add_button);
-        clearButton = view.findViewById(R.id.clear_button);
+        AppCompatButton addButton = view.findViewById(R.id.add_button);
+        AppCompatButton clearButton = view.findViewById(R.id.clear_button);
         darkening = getActivity().findViewById(R.id.darkening);
 
         //При условии прикрепления к RecyclerViewActivity
@@ -78,20 +77,21 @@ public class AddFormFragment extends Fragment {
             buttons_group.setLayoutParams(buttons_group_layout_params);
 
             //- извлечь и отобразить значения полей
-            nameView.setText(contactsManager.getEntry(index).getPerson());
-            phoneView.setText(contactsManager.getEntry(index).getPhone());
+            nameView.setText(contactsManager.getEntry(originalIndex).getPerson());
+            phoneView.setText(contactsManager.getEntry(originalIndex).getPhone());
 
             //- перехватить нажатия, чтобы не срабатывал нижележащий слой RecyclerView
             darkening.setOnClickListener(v -> {
             });
 
             //- установить слушателей кнопкам в зависимости от Activity, к которой они прикреплены
-            addButton.setOnClickListener(v -> handleButtonsOnRecyclerViewActivity(v));
-            clearButton.setOnClickListener(v -> startFragmentSuicide());
+            clearButton.setOnClickListener(v -> removeThisFragment());
         } else {
-            addButton.setOnClickListener(v -> handleButtonsOnMainActivity(v));
             clearButton.setOnClickListener(v -> clearFields());
         }
+
+        addButton.setOnClickListener(v -> handleAddButton());
+
 
         return view;
     }
@@ -129,65 +129,76 @@ public class AddFormFragment extends Fragment {
             //- отмена затемнения)
             darkening.setAlpha(0F);
             darkening.setVisibility(View.GONE);
-
-            //- отмена выделения элемента RecyclerView
-            adapter.cancelColorHighlight(index);
         }
     }
 
-    //Обработчик для кнопки addButton при прикреплении к MainActivity
-    private void handleButtonsOnMainActivity(View v) {
+    //Обработчик для кнопки addButton
+    private void handleAddButton() {
         String name = nameView.getText().toString().trim();
         String phone = phoneView.getText().toString().trim();
 
-        //Заполнены ли все поля и нет ли дубликатов
-        if (name.isEmpty() || phone.isEmpty()) {
-            notificationView.setText(R.string.empty_fields);
-            return;
-        } else if (contactsManager.containsPerson(name)) {
-            notificationView.setText(
-                    contactsManager.getEntry(name).getPhone().equals(phone) ?
-                            R.string.person_phone_exist :
-                            R.string.person_exist);
-            return;
-        }
-
-        //Добавление записи в телефонную книгу
-        contactsManager.addEntry(name, phone);
-
-        //Вывод Toast сообщения о создании записи
-        Toast.makeText(getActivity(), getString(R.string.record_created, name, phone),
-                Toast.LENGTH_SHORT).show();
-
-        //Обновление уведомления о количестве записей в телефонной книге
-        ((MainActivity) getActivity()).showPhonesQuantity();
-
-        //Очистка полей
-        clearFields();
-    }
-
-    //Обработчик для кнопки addButton при прикреплении к RecyclerViewActivity
-    private void handleButtonsOnRecyclerViewActivity(View v) {
-        String name = nameView.getText().toString().trim();
-        String phone = phoneView.getText().toString().trim();
-
-        //Заполнены ли все поля и нет ли дубликатов
+        //Заполнены ли все поля
         if (name.isEmpty() || phone.isEmpty()) {
             notificationView.setText(R.string.empty_fields);
             return;
         }
 
-        //Замена записи в телефонной книге
-        ContactsManager.Entry replacement =
-                new ContactsManager.Entry(nameView.getText().toString(),
-                        phoneView.getText().toString());
-        contactsManager.replace(index, replacement);
+        ContactsManager.Entry entry = contactsManager.getEntry(name);
 
-        //Обновление RecyclerView
-        adapter.notifyItemChanged(index);
+        //Проверка к какой активити прикреплён фрагмент
+        if (isAttachedToRecyclerViewActivity) {
+            //Проверка на дубликаты
+            if (entry != null && entry != contactsManager.getEntry(originalIndex)) {
+                notificationView.setText(
+                        entry.getPhone().equals(phone) ?
+                                R.string.person_phone_exist :
+                                R.string.person_exist);
+                return;
+            }
 
-        //Удаление фрагмента
-        startFragmentSuicide();
+            //Замена записи в телефонной книге
+            ContactsManager.Entry replacement =
+                    new ContactsManager.Entry(nameView.getText().toString(),
+                            phoneView.getText().toString());
+            contactsManager.replaceEntry(originalIndex, replacement);
+
+            //Вывод Toast сообщения о изменении записи
+            Toast.makeText(getActivity(), getString(R.string.record_changed, name, phone),
+                    Toast.LENGTH_SHORT).show();
+
+            //Отмена выделения элемента RecyclerView
+            adapter.cancelColorHighlight(position);
+
+            //Обновление RecyclerView
+            adapter.updateContactList();
+            adapter.notifyDataSetChanged();
+
+            //Удаление фрагмента
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+
+        } else {
+            //Проверка на дубликаты
+            if (entry != null) {
+                notificationView.setText(
+                        entry.getPhone().equals(phone) ?
+                                R.string.person_phone_exist :
+                                R.string.person_exist);
+                return;
+            }
+
+            //Добавление записи в телефонную книгу
+            contactsManager.addEntry(name, phone);
+
+            //Вывод Toast сообщения о создании записи
+            Toast.makeText(getActivity(), getString(R.string.record_created, name, phone),
+                    Toast.LENGTH_SHORT).show();
+
+            //Обновление уведомления о количестве записей в телефонной книге
+            ((MainActivity) getActivity()).showPhonesQuantity();
+
+            //Очистка полей
+            clearFields();
+        }
     }
 
     //Очистка полей
@@ -197,19 +208,19 @@ public class AddFormFragment extends Fragment {
         phoneView.setText("");
     }
 
-    //Удаление фрагмента
-    private void startFragmentSuicide() {
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .commit();
+    private void removeThisFragment() {
+        //Отмена выделения элемента RecyclerView
+        adapter.cancelColorHighlight(position);
+
+        //Удаление фрагмента
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
 
     //Интерфейс с методами для выделения цветом и снятия выделения с выбранного элемента
     interface ColorHighlighting {
 
-        void colorHighlight(int index);
+        void colorHighlight(int position);
 
-        void cancelColorHighlight(int index);
+        void cancelColorHighlight(int position);
     }
 }

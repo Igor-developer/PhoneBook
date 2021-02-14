@@ -1,10 +1,9 @@
 package com.example.android.phonebook;
 
+import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,27 +41,23 @@ public class SearchFormFragment extends Fragment {
 
         //Заполнено ли поле поиска
         if (name.isEmpty()) {
-            notification_view.setTextColor(getResources().getColor(R.color.red));
             notification_view.setText(R.string.empty_name_field);
             return;
-        } else {
-            notification_view.setTextColor(getResources().getColor(R.color.black));
-            notification_view.setText(R.string.space);
-        }
-
-        //Поиск записи в телефонной книге
-        if (contacts_manager.containsPerson(name)) {
-            notification_view.setTextColor(getResources().getColor(R.color.black));
-            notification_view.setText(getString(R.string.person_telephones,
-                                                name,
-                                                contacts_manager.getEntry(name).getPhone()));
-
-        } else {
-            notification_view.setTextColor(getResources().getColor(R.color.red));
-            notification_view.setText(getString(R.string.zero_person_phones, name));
         }
 
         //Затирание букв в поле поиска
         name_view.setText(R.string.space);
+
+        //Поиск записи в телефонной книге
+        if (contacts_manager.findEntries(name).isEmpty()) {
+            notification_view.setText(getString(R.string.zero_person_phones, name));
+        } else {
+            notification_view.setText(R.string.space);
+
+            //Запуск RecyclerViewActivity
+            Intent intent = new Intent(getActivity(), RecyclerViewActivity.class);
+            intent.putExtra(RecyclerViewActivity.REQUEST, name);
+            startActivity(intent);
+        }
     }
 }

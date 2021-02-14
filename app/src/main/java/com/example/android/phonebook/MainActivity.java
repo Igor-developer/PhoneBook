@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         SearchFormFragment search_form_fragment = SearchFormFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.form_fragment, search_form_fragment)
+                .add(R.id.form_fragment, add_form_fragment)
                 .commit();
 
         //Назначение слушателей

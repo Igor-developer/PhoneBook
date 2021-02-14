@@ -2,7 +2,6 @@ package com.example.android.phonebook;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public final class ContactsManager {
 
@@ -28,15 +27,18 @@ public final class ContactsManager {
         return contactList.size();
     }
 
-    //Содержится ли запись с данным именем
-    public boolean containsPerson(String name) {
-        for (Entry i : contactList) {
-            if (i.person.equals(name)) {
-                return true;
+    //Поиск всех записей по частичному совпадению
+    public List<Entry> findEntries(String query) {
+        List<Entry> findings = new ArrayList<>();
+        for (int i = 0; i < contactList.size(); i++) {
+            Entry entry = contactList.get(i);
+            entry.listIndex = i;    //установка "оригинального" индекса
+            if (query == null || entry.person.toLowerCase().contains(query.toLowerCase())) {
+                findings.add(entry);
             }
         }
 
-        return false;
+        return findings;
     }
 
     //Получение записи по имени человека
@@ -64,7 +66,7 @@ public final class ContactsManager {
         contactList.add(new Entry(name, phone));
     }
 
-    public void replace(int index, Entry replacement) {
+    public void replaceEntry(int index, Entry replacement) {
         contactList.set(index, replacement);
     }
 
@@ -72,6 +74,7 @@ public final class ContactsManager {
     public static class Entry {
         private String person;
         private String phone;
+        private int listIndex;
 
         public Entry(String person, String phone) {
             this.person = person;
@@ -82,16 +85,12 @@ public final class ContactsManager {
             return person;
         }
 
-        public void setPerson(String person) {
-            this.person = person;
-        }
-
         public String getPhone() {
             return phone;
         }
 
-        public void setPhone(String phone) {
-            this.phone = phone;
+        public int getListIndex() {
+            return listIndex;
         }
     }
 }
