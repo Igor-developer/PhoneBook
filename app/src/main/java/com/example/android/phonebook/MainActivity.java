@@ -55,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
         showPhonesQuantity();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //Обновление уведомления о количестве записей в телефонной книге
+        showPhonesQuantity();
+    }
+
     //Отображение количества телефонов
     void showPhonesQuantity() {
         //Назначение слушателя кнопке отображения количества записей

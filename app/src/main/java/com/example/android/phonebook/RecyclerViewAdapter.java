@@ -1,11 +1,15 @@
 package com.example.android.phonebook;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,12 +70,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        View itemView;
-        TextView person;
-        TextView telephones;
-        AppCompatImageButton edit_button;
-        AppCompatImageButton delete_button;
-        AppCompatImageButton call_button;
+        private View itemView;
+        private TextView person;
+        private TextView telephone;
+        private AppCompatImageButton edit_button;
+        private AppCompatImageButton delete_button;
+        private AppCompatImageButton call_button;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,21 +87,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.call_button = itemView.findViewById(R.id.call_button);
 
             this.person = itemView.findViewById(R.id.person);
-            this.telephones = itemView.findViewById(R.id.telephones);
+            this.telephone = itemView.findViewById(R.id.telephones);
         }
 
         private void bind(int position) {
 
             ContactsManager.Entry entry = contactList.get(position);
+            String person = entry.getPerson();
+            String phone = entry.getPhone();
 
-            person.setText(entry.getPerson());
-            telephones.setText(entry.getPhone());
+            this.person.setText(person);
+            this.telephone.setText(phone);
             int original_index = entry.getListIndex();
 
+            RecyclerViewActivity context = (RecyclerViewActivity) itemView.getContext();
+
+            //Слушатель для кнопки редактировать
             edit_button.setOnClickListener(v -> {
-
-                RecyclerViewActivity context = (RecyclerViewActivity) itemView.getContext();
-
                 colorHighlight(position);
 
                 AddFormFragment add_form_fragment = AddFormFragment.newInstance();
@@ -112,12 +118,32 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         .commit();
             });
 
+            //Слушатель для кнопки удалить
             delete_button.setOnClickListener(v -> {
-//                colorHighlight(position);
-//                cancelColorHighlight(position);
-
+                colorHighlight(position);
+                new AlertDialog.Builder(context)
+                        .setTitle(R.string.remove_entry_title)
+                        .setMessage(context.getString(R.string.remove_entry_message,
+                                person,
+                                phone))
+                        .setIcon(android.R.drawable.ic_delete)
+                        .setPositiveButton(R.string.yes, (dialog, which) -> {
+                            ContactsManager.getInstance().removeEntry(original_index);
+                            Toast.makeText(context,
+                                    context.getString(R.string.record_removed, person, phone),
+                                    Toast.LENGTH_SHORT).show();
+                            cancelColorHighlight(position);
+                            updateContactList();
+                            notifyDataSetChanged();
+                        })
+                        .setNegativeButton(R.string.no, (dialog, which) -> {
+                            cancelColorHighlight(position);
+                        })
+                        .create()
+                        .show();
             });
 
+            //Слушатель для кнопки позвонить
             call_button.setOnClickListener(v -> {
 //                colorHighlight(position);
 //                cancelColorHighlight(position);

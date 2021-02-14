@@ -70,6 +70,10 @@ public final class ContactsManager {
         contactList.set(index, replacement);
     }
 
+    public void removeEntry(int index) {
+        contactList.remove(index);
+    }
+
     //Внутренний класс, который содержит контакты человека
     public static class Entry {
         private String person;
