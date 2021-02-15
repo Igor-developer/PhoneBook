@@ -1,6 +1,5 @@
 package com.example.android.phonebook;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,13 +59,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void colorHighlight(int position) {
         recyclerView.getChildAt(position).setBackgroundColor(
-                recyclerView.getResources().getColor(R.color.accent));
+                recyclerView.getResources().getColor(R.color.primary_lilac_dark));
     }
 
     @Override
     public void cancelColorHighlight(int position) {
         recyclerView.getChildAt(position).setBackgroundColor(
-                recyclerView.getResources().getColor(R.color.light_lilac));
+                recyclerView.getResources().getColor(R.color.primary_lilac));
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

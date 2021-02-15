@@ -33,5 +33,5 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         android:alpha="0"
-        android:background="@color/light_green" />
+        android:background="@color/secondary_green" />
 </FrameLayout>
