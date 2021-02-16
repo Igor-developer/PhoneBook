@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="secondary_green">#cdf0b2</color>
-    <color name="secondary_green_dark">#9bbd82</color>
-    <color name="secondary_green_light">#f4fde7</color>
     <color name="primary_lilac">#a6b5ff</color>
     <color name="primary_lilac_dark">#7485cc</color>
     <color name="primary_lilac_light">#d9e7ff</color>
+    <color name="secondary_green">#cdf0b2</color>
+    <color name="secondary_green_dark">#9bbd82</color>
+    <color name="secondary_green_light">#f4fde7</color>
 
     <color name="ic_launcher_background">#FFFFFF</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
+    <color name="grey_light">#F5F5F5</color>
     <color name="red">#E41414</color>
 </resources>

@@ -15,8 +15,9 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:layout_margin="4dp"
+            android:padding="2dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginHorizontal="@dimen/default_margin"
             android:background="@color/black">
 
         <androidx.appcompat.widget.AppCompatButton
@@ -27,13 +28,14 @@
             android:text="@string/peoples_in_phone_book"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:background="@color/white"/>
+            android:background="@color/grey_light"/>
         </FrameLayout>
 
         <!-- Кнопки перехода между фрагментами с формами -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
@@ -50,7 +52,7 @@
 
             <View
                 android:id="@+id/divider"
-                android:layout_width="4dp"
+                android:layout_width="@dimen/default_margin"
                 android:layout_height="match_parent"
                 android:background="@color/white" />
 

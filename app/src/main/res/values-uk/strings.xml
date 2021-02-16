@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">PhoneBook</string>
+    <string name="add_phone">Додати\nтелефон</string>
+    <string name="search_phone">Знайти\nтелефон</string>
+    <string name="name">Ім\'я</string>
+    <string name="phone">Телефон</string>
+    <string name="space" />
+    <string name="add_person">Додати</string>
+    <string name="save_person">Зберегти</string>
+    <string name="clear">Очистити</string>
+    <string name="cancel">Відмінити</string>
+    <string name="search_person">Пошук за ім\'ям</string>
+    <string name="search">Шукати</string>
+    <string name="zero_phones_quantity">В телефонній книзі немає записів</string>
+    <string name="peoples_in_phone_book">Відкрити всі записи</string>
+    <string name="phones_quantity">Відкрити всі записи (%1$d)</string>
+    <string name="empty_fields">Не всі поля заповнені!</string>
+    <string name="person_exist">Ця людина вже є в телефонній книзі!</string>
+    <string name="person_phone_exist">Ця людина і цей номер вже є в телефонній книзі!</string>
+    <string name="record_created">Запис (%1$s, %2$s) успішно доданий!</string>
+    <string name="record_changed">Запис (%1$s, %2$s) успішно змінений!</string>
+    <string name="record_removed">Запис (%1$s, %2$s) успішно видалений!</string>
+    <string name="zero_person_phones">Немає записів для %1$s</string>
+    <string name="back">Назад</string>
+    <string name="edit_entry">Редагувати запис</string>
+    <string name="delete_entry">Видалити запис</string>
+    <string name="call">Зателефонувати</string>
+    <string name="empty_name_field">Поле не заповнене!</string>
+    <string name="request_results">Результати пошуку за запитом «%1$s»:</string>
+    <string name="entries">Всі записи:</string>
+    <string name="remove_entry_title">Видалення запису</string>
+    <string name="remove_entry_message">Видалити запис\n%1$s - %2$s ?</string>
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+</resources>

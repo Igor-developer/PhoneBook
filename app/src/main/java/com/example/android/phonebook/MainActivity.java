@@ -77,9 +77,11 @@ public class MainActivity extends AppCompatActivity {
         if (quantity == 0) {
             info_string = getString(R.string.zero_phones_quantity);
             info_button.setEnabled(false);
+            info_button.setTextColor(getResources().getColor(R.color.red));
         } else {
             info_string = getString(R.string.phones_quantity, quantity);
             info_button.setEnabled(true);
+            info_button.setTextColor(getResources().getColor(R.color.black));
         }
 
         info_button.setText(info_string);
