@@ -90,16 +90,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             //Слушатель для кнопки редактировать
             editButton.setOnClickListener(v -> {
-                Log.d("klm", String.valueOf(position));
-
-                AddFormFragment add_form_fragment = AddFormFragment.newInstance();
+                EditFormFragment edit_form_fragment = EditFormFragment.newInstance();
 
                 Bundle bundle = new Bundle();
-                bundle.putInt(AddFormFragment.ORIGINAL_INDEX, original_index);
-                add_form_fragment.setArguments(bundle);
+                bundle.putInt(EditFormFragment.ORIGINAL_INDEX, original_index);
+                edit_form_fragment.setArguments(bundle);
                 context.getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.root_container, add_form_fragment)
+                        .replace(R.id.root_container, edit_form_fragment)
                         .commit();
             });
 

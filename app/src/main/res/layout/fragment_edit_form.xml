@@ -4,10 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFormFragment"
+    tools:context=".EditFormFragment"
     android:orientation="vertical">
 
     <!-- Форма ввода -->
+    <View
+        android:id="@+id/top_divider"
+        style="@style/recycler_form_divider_style" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,13 +56,13 @@
     <LinearLayout
         android:id="@+id/buttons_group"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="@dimen/default_margin"
         android:background="@color/secondary_green"
         android:gravity="center|top"
         android:orientation="horizontal">
 
-        <!-- Кнопка добавить запись -->
+        <!-- Кнопка сохранить -->
         <LinearLayout
             android:weightSum="100"
             android:layout_weight="100"
@@ -68,13 +72,13 @@
             android:layout_marginStart="@dimen/side_margin"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/add_button"
-            style="@style/add_button_style"
-            android:text="@string/add_person" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add_button"
+                style="@style/add_button_style"
+                android:text="@string/save_person" />
         </LinearLayout>
 
-        <!-- Кнопка очистить -->
+        <!-- Кнопка отменить -->
         <LinearLayout
             android:weightSum="100"
             android:layout_weight="100"
@@ -84,10 +88,14 @@
             android:layout_marginEnd="@dimen/side_margin"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/clear_button"
-            style="@style/add_button_style"
-            android:text="@string/clear" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/clear_button"
+                style="@style/add_button_style"
+                android:text="@string/cancel" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <View
+        android:id="@+id/bottom_divider"
+        style="@style/recycler_form_divider_style" />
 </LinearLayout>
