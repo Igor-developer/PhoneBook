@@ -12,7 +12,6 @@
     <string name="search_person">Поиск по имени</string>
     <string name="search">Искать</string>
     <string name="zero_phones_quantity">В телефонной книге нет записей</string>
-    <string name="peoples_in_phone_book">Открыть все записи</string>
     <string name="phones_quantity">Открыть все записи (%1$d)</string>
     <string name="empty_fields">Не все поля заполнены!</string>
     <string name="person_exist">Этот человек уже есть в телефонной книге!</string>
@@ -32,4 +31,5 @@
     <string name="remove_entry_message">Удалить запись\n%1$s - %2$s ?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="chosen">Избранные</string>
 </resources>

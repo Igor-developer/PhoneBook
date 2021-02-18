@@ -12,23 +12,11 @@
         android:orientation="vertical">
 
         <!-- Button отображения количества телефонов -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:background="@color/black">
+        <FrameLayout style="@style/border_style">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/info_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/peoples_in_phone_book"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:background="@color/grey_light"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/info_button"
+                style="@style/info_button_style" />
         </FrameLayout>
 
         <!-- Кнопки перехода между фрагментами с формами -->
@@ -40,39 +28,27 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/go_to_add_form"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/button_go_to_form_style"
                 android:background="@color/secondary_green"
                 android:enabled="false"
-                android:gravity="center"
-                android:text="@string/add_phone"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:text="@string/add_phone" />
 
             <View
                 android:id="@+id/divider"
-                android:layout_width="@dimen/default_margin"
-                android:layout_height="match_parent"
-                android:background="@color/white" />
+                style="@style/default_divider_style" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/go_to_main_activity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/button_go_to_form_style"
                 android:background="@color/primary_lilac"
                 android:enabled="true"
-                android:gravity="center"
-                android:text="@string/search_phone"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:text="@string/search_phone" />
         </LinearLayout>
 
         <!-- Контейнер для фрагментов с формами -->
         <FrameLayout
             android:id="@+id/form_fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </LinearLayout>
 </ScrollView>

@@ -1,63 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
-    android:layout_marginBottom="8dp"
-    android:background="@color/primary_lilac"
-    android:orientation="horizontal">
+    android:layout_marginTop="@dimen/default_margin"
+    android:layout_marginBottom="@dimen/default_margin"
+    android:background="@color/primary_lilac">
+
+    <TableRow>
 
     <ImageButton
         android:id="@+id/edit_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="5dp"
-        android:layout_gravity="center_vertical"
-        android:scaleType="fitCenter"
+        style="@style/recyclerview_button_style"
         android:background="@drawable/ic_edit_button"
         android:contentDescription="@string/edit_entry" />
 
     <ImageButton
         android:id="@+id/delete_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="5dp"
-        android:layout_gravity="center_vertical"
-        android:scaleType="fitCenter"
+        style="@style/recyclerview_button_style"
         android:background="@drawable/ic_delete_button"
         android:contentDescription="@string/delete_entry" />
 
     <TextView
         android:id="@+id/person"
-        android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="start|center_vertical"
-        android:layout_gravity="center_vertical"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:textColor="@color/black" />
+        style="@style/recyclerview_label_style"
+        android:textStyle="bold" />
+    </TableRow>
 
-    <TextView
-        android:id="@+id/telephones"
-        android:layout_weight="3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="start|center_vertical"
-        android:layout_gravity="center_vertical"
-        android:textSize="14sp"
-        android:textColor="@color/black" />
+    <TableRow>
 
-    <ImageButton
-        android:id="@+id/call_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="5dp"
-        android:layout_gravity="center_vertical"
-        android:scaleType="fitCenter"
-        android:background="@drawable/ic_call_button"
-        android:contentDescription="@string/call" />
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/choosen_button"
+            style="@style/recyclerview_button_style"
+            android:background="@drawable/ic_star_off_button"
+            android:contentDescription="@string/chosen" />
+
+        <ImageButton
+            android:id="@+id/call_button"
+            style="@style/recyclerview_button_style"
+            android:background="@drawable/ic_call_button"
+            android:contentDescription="@string/call" />
+
+        <TextView
+            android:id="@+id/telephones"
+            style="@style/recyclerview_label_style" />
+    </TableRow>
+</TableLayout>

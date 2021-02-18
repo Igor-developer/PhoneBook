@@ -10,10 +10,7 @@
     <!-- Форма ввода -->
     <View
         android:id="@+id/top_divider"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"
-        android:alpha="0"/>
+        style="@style/recycler_form_divider_style" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,49 +20,24 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/name"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            style="@style/form_label_style"
+            android:text="@string/name" />
 
         <EditText
             android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:background="@color/white"
-            android:ems="10"
+            style="@style/form_edittext_style"
             android:importantForAutofill="no"
-            android:hint="@string/space"
-            android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:inputType="textPersonName" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/phone"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            style="@style/form_label_style"
+            android:text="@string/phone" />
 
         <EditText
             android:id="@+id/phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:ems="10"
+            style="@style/form_edittext_style"
             android:importantForAutofill="no"
-            android:hint="@string/space"
-            android:inputType="phone"
-            android:textSize="24sp" />
+            android:inputType="phone" />
     </LinearLayout>
 
     <!-- Форма уведомлений -->
@@ -77,70 +49,53 @@
 
         <TextView
             android:id="@+id/notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginVertical="20dp"
-            android:textAlignment="center"
-            android:textColor="@color/red"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:visibility="visible" />
+            style="@style/notification_label_style" />
+
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/buttons_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="@dimen/default_margin"
         android:background="@color/secondary_green"
         android:gravity="center|top"
         android:orientation="horizontal">
 
         <!-- Кнопка добавить запись (@string/save_person для RecyclerViewActivity) -->
-        <FrameLayout
-            android:layout_weight="1"
+        <LinearLayout
+            android:weightSum="100"
+            android:layout_weight="100"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginStart="@dimen/side_margin"
+            android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="20dp"
-            android:background="@color/secondary_green_light"
-            android:enabled="true"
-            android:padding="10dp"
-            android:text="@string/add_person"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
-        </FrameLayout>
+            style="@style/add_button_style"
+            android:text="@string/add_person" />
+        </LinearLayout>
 
         <!-- Кнопка очистить (@string/cancel для RecyclerViewActivity) -->
-        <FrameLayout
-            android:layout_weight="1"
+        <LinearLayout
+            android:weightSum="100"
+            android:layout_weight="100"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_marginEnd="@dimen/side_margin"
+            android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/clear_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="20dp"
-            android:background="@color/secondary_green_light"
-            android:enabled="true"
-            android:padding="10dp"
-            android:text="@string/clear"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
-    </FrameLayout>
+            style="@style/add_button_style"
+            android:text="@string/clear" />
+    </LinearLayout>
 </LinearLayout>
 
     <View
         android:id="@+id/bottom_divider"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:alpha="0" />
+        style="@style/recycler_form_divider_style" />
 </LinearLayout>

@@ -12,5 +12,141 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="info_button_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@color/grey_light</item>
+        <item name="android:textSize">@dimen/buttons_text_size</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:padding">@dimen/default_margin</item>
+    </style>
+
+    <style name="border_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/default_border_thickness</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginStart">@dimen/default_margin</item>
+        <item name="android:layout_marginEnd">@dimen/default_margin</item>
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <style name="button_go_to_form_style">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/buttons_text_size</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:padding">@dimen/default_margin</item>
+    </style>
+
+    <style name="default_divider_style">
+        <item name="android:layout_width">@dimen/default_margin</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="recycler_form_divider_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:alpha">0</item>
+    </style>
+
+    <style name="form_label_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="form_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginStart">@dimen/side_margin</item>
+        <item name="android:layout_marginEnd">@dimen/side_margin</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:ems">10</item>
+        <item name="android:hint">@string/space</item>
+    </style>
+
+    <style name="notification_label_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/side_margin</item>
+        <item name="android:layout_marginEnd">@dimen/side_margin</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="search_button_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/side_margin</item>
+        <item name="android:layout_marginEnd">@dimen/side_margin</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@color/primary_lilac_light</item>
+        <item name="android:textSize">@dimen/buttons_text_size</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:padding">@dimen/default_margin</item>
+    </style>
+
+    <style name="add_button_style">
+        <item name="android:layout_weight">80</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@color/secondary_green_light</item>
+        <item name="android:textSize">@dimen/buttons_text_size</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:padding">@dimen/default_margin</item>
+    </style>
+
+    <style name="recyclerview_button_style">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:layout_marginStart">@dimen/default_margin</item>
+    </style>
+
+    <style name="recyclerview_label_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:paddingTop">@dimen/default_margin</item>
+        <item name="android:paddingBottom">@dimen/default_margin</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="darkening_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:alpha">0</item>
+        <item name="android:background">@color/secondary_green</item>
+    </style>
+
+    <style name="request_view_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textStyle">bold|italic</item>
     </style>
 </resources>

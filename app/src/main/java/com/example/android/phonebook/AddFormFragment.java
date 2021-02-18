@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,7 @@ import android.widget.Toast;
 
 public class AddFormFragment extends Fragment {
 
-    public static final String RECYCLERVIEW_POSITION = "RECYCLERVIEW_POSITION";
     public static final String ORIGINAL_INDEX = "ORIGINAL_INDEX";
-    private int position;
     private int originalIndex;
     private ContactsManager contactsManager;
     private RecyclerViewAdapter adapter;
@@ -38,7 +38,6 @@ public class AddFormFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            position = getArguments().getInt(RECYCLERVIEW_POSITION);
             originalIndex = getArguments().getInt(ORIGINAL_INDEX);
         }
     }
@@ -85,7 +84,8 @@ public class AddFormFragment extends Fragment {
             });
 
             //- установить слушателей кнопкам в зависимости от Activity, к которой они прикреплены
-            clearButton.setOnClickListener(v -> removeThisFragment());
+            clearButton.setOnClickListener(v -> getActivity()
+                    .getSupportFragmentManager().beginTransaction().remove(this).commit());
         } else {
             clearButton.setOnClickListener(v -> clearFields());
         }
@@ -166,9 +166,6 @@ public class AddFormFragment extends Fragment {
             Toast.makeText(getActivity(), getString(R.string.record_changed, name, phone),
                     Toast.LENGTH_SHORT).show();
 
-            //Отмена выделения элемента RecyclerView
-            adapter.cancelColorHighlight(position);
-
             //Обновление RecyclerView
             adapter.updateContactList();
             adapter.notifyDataSetChanged();
@@ -206,21 +203,5 @@ public class AddFormFragment extends Fragment {
         notificationView.setText(R.string.space);
         nameView.setText("");
         phoneView.setText("");
-    }
-
-    private void removeThisFragment() {
-        //Отмена выделения элемента RecyclerView
-        adapter.cancelColorHighlight(position);
-
-        //Удаление фрагмента
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-    }
-
-    //Интерфейс с методами для выделения цветом и снятия выделения с выбранного элемента
-    interface ColorHighlighting {
-
-        void colorHighlight(int position);
-
-        void cancelColorHighlight(int position);
     }
 }

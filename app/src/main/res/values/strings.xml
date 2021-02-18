@@ -12,7 +12,6 @@
     <string name="search_person">Search by name</string>
     <string name="search">Search</string>
     <string name="zero_phones_quantity">There are no entries in the phone book</string>
-    <string name="peoples_in_phone_book">Open all entries</string>
     <string name="phones_quantity">Open all entries (%1$d)</string>
     <string name="empty_fields">Not all fields are filled!</string>
     <string name="person_exist">This person is already in the phone book!</string>
@@ -32,4 +31,5 @@
     <string name="remove_entry_message">Delete entry\n%1$s - %2$s ?</string>
     <string name="yes">Yes</string>
     <string name="no">Not</string>
+    <string name="chosen">Chosen</string>
 </resources>
