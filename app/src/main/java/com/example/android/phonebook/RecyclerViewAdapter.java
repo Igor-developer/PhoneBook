@@ -1,7 +1,6 @@
 package com.example.android.phonebook;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +96,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 edit_form_fragment.setArguments(bundle);
                 context.getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.root_container, edit_form_fragment)
+                        .replace(R.id.edit_fragment_container, edit_form_fragment)
                         .commit();
             });
 

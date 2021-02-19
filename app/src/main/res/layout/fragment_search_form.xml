@@ -16,8 +16,7 @@
 
         <TextView
             style="@style/form_label_style"
-            android:text="@string/search_person"
-            />
+            android:text="@string/search_person" />
 
         <EditText
             android:id="@+id/name"
@@ -27,17 +26,17 @@
     </LinearLayout>
 
     <!-- Форма уведомлений -->
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary_lilac"
-        android:gravity="center_horizontal">
+        android:background="@color/primary_lilac">
 
         <TextView
             android:id="@+id/notification"
             style="@style/notification_label_style" />
-    </RelativeLayout>
+    </FrameLayout>
 
+    <!-- Кнопка искать -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,7 +44,6 @@
         android:gravity="center|top"
         android:orientation="vertical">
 
-        <!-- Кнопка искать -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/search_button"
             style="@style/search_button_style"

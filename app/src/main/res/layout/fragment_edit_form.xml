@@ -41,17 +41,16 @@
     </LinearLayout>
 
     <!-- Форма уведомлений -->
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/secondary_green"
-        android:gravity="center_horizontal">
+        android:background="@color/secondary_green">
 
         <TextView
             android:id="@+id/notification"
             style="@style/notification_label_style" />
 
-    </RelativeLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/buttons_group"

@@ -82,6 +82,7 @@
     <style name="notification_label_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_marginStart">@dimen/side_margin</item>
         <item name="android:layout_marginEnd">@dimen/side_margin</item>
         <item name="android:layout_marginTop">@dimen/default_margin</item>
@@ -105,7 +106,7 @@
     </style>
 
     <style name="add_button_style">
-        <item name="android:layout_weight">80</item>
+        <item name="android:layout_weight">90</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/default_margin</item>
