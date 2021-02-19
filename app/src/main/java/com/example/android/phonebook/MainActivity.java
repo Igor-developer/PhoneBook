@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-//Занятие 5.
-//В приложении PhoneBook реализовать «master detail flow» и фрагменты.
+//Занятие 6.
+//В приложении PhoneBook использовать стили и ресурсы.
 
     ContactsManager contactsManager;
 

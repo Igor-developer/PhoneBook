@@ -6,17 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private List<ContactsManager.Entry> contactList;
+    private List<ContactsManager.Entry> contacts; //выборка по поиску
     String request;
 
     public RecyclerViewAdapter(String request) {
@@ -25,7 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public void updateContactList() {
-        this.contactList = ContactsManager.getInstance().findEntries(request);
+        this.contacts = ContactsManager.getInstance().findEntries(request);
     }
 
     //Накачиваем лейаут и создаём ViewHolder
@@ -50,7 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //В методе нужно указать количество элементов RecyclerView
     @Override
     public int getItemCount() {
-        return contactList.size();
+        return contacts.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -79,13 +77,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private void bind(int position) {
 
             RecyclerViewActivity context = (RecyclerViewActivity) itemView.getContext();
-            ContactsManager.Entry entry = contactList.get(position);
+            ContactsManager.Entry entry = contacts.get(position);
             String person = entry.getPerson();
             String phone = entry.getPhone();
 
             int original_index = entry.getListIndex();
             this.person.setText(person);
             this.telephone.setText(phone);
+            this.choosenButton.setBackgroundResource(entry.isChoosen() ?
+                    R.drawable.ic_star_on_button : R.drawable.ic_star_off_button);
 
             //Слушатель для кнопки редактировать
             editButton.setOnClickListener(v -> {
@@ -125,7 +125,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             //Слушатель для кнопки добавить и удалить из избранного
             choosenButton.setOnClickListener(v -> {
-
+                ContactsManager.Entry real_entry =
+                        ContactsManager.getInstance().getEntry(original_index);
+                real_entry.setChoosen(!real_entry.isChoosen());
+                notifyItemChanged(position);
             });
 
             //Слушатель для кнопки позвонить

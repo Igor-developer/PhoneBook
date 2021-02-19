@@ -78,6 +78,7 @@ public final class ContactsManager {
     public static class Entry {
         private String person;
         private String phone;
+        private boolean choosen;
         private int listIndex;
 
         public Entry(String person, String phone) {
@@ -95,6 +96,14 @@ public final class ContactsManager {
 
         public int getListIndex() {
             return listIndex;
+        }
+
+        public boolean isChoosen() {
+            return choosen;
+        }
+
+        public void setChoosen(boolean choosen) {
+            this.choosen = choosen;
         }
     }
 }
