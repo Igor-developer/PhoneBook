@@ -11,13 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Button отображения количества телефонов -->
-        <FrameLayout style="@style/border_style">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/info_button"
-                style="@style/info_button_style" />
-        </FrameLayout>
+        <!-- Контейнер для фрагмента с кнопками: избранные, все записи и последние -->
+        <FrameLayout
+            android:id="@+id/count_phones_fragment"
+            style="@style/count_phones_fragment_style" />
 
         <!-- Кнопки перехода между фрагментами с формами -->
         <LinearLayout

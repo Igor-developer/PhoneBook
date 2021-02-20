@@ -72,7 +72,7 @@ public class AddFormFragment extends Fragment {
                 Toast.LENGTH_SHORT).show();
 
         //Обновление уведомления о количестве записей в телефонной книге
-        ((MainActivity) getActivity()).showPhonesQuantity();
+        ((MainActivity) getActivity()).getCountPhonesFragment().showPhonesQuantity();
 
         //Очистка полей
         clearFields();

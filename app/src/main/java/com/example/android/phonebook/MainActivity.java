@@ -2,21 +2,20 @@ package com.example.android.phonebook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import android.content.Intent;
+
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-//Занятие 6.
-//В приложении PhoneBook использовать стили и ресурсы.
+//Занятие 8.
+//В приложение PhoneBook добавить ViewPager с TabLayout. Реализовать три таба:
+//"Избранные", "Все контакты" и "Последние".
 
-    ContactsManager contactsManager;
+    CountPhonesFragment countPhonesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        contactsManager = ContactsManager.getInstance();
 
         //Создание фрагментов
         AddFormFragment add_form_fragment = AddFormFragment.newInstance();
@@ -24,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.form_fragment, add_form_fragment)
+                .commit();
+        countPhonesFragment = CountPhonesFragment.newInstance();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.count_phones_fragment, countPhonesFragment)
                 .commit();
 
         //Назначение слушателей
@@ -50,38 +54,10 @@ public class MainActivity extends AppCompatActivity {
             go_to_add_form_button.setEnabled(true);
             go_to_search_form_button.setEnabled(false);
         });
-
-        //Обновление уведомления о количестве записей в телефонной книге
-        showPhonesQuantity();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        //Обновление уведомления о количестве записей в телефонной книге
-        showPhonesQuantity();
-    }
-
-    //Отображение количества телефонов
-    void showPhonesQuantity() {
-        //Назначение слушателя кнопке отображения количества записей
-        AppCompatButton info_button = findViewById(R.id.info_button);
-        info_button.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this,
-                                          RecyclerViewActivity.class)));
-
-        int quantity = contactsManager.getSize();
-
-        String info_string;
-        if (quantity == 0) {
-            info_string = getString(R.string.zero_phones_quantity);
-            info_button.setEnabled(false);
-        } else {
-            info_string = getString(R.string.phones_quantity, quantity);
-            info_button.setEnabled(true);
-        }
-
-        info_button.setText(info_string);
+    public CountPhonesFragment getCountPhonesFragment() {
+        return countPhonesFragment;
     }
 }

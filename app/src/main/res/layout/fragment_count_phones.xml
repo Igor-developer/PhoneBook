@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:context=".CountPhonesFragment">
+
+    <FrameLayout
+        android:id="@+id/chosen_info_border"
+        style="@style/border_style"
+        tools:context=".CountPhonesFragment">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/chosen_info_button"
+            style="@style/info_button_style" />
+    </FrameLayout>
+
+    <FrameLayout style="@style/border_style">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/info_button"
+            style="@style/info_button_style" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/last_phones_info_border"
+        style="@style/border_style"
+        tools:context=".CountPhonesFragment">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/last_phones_info_button"
+            style="@style/info_button_style" />
+    </FrameLayout>
+</LinearLayout>

@@ -12,7 +12,9 @@
     <string name="search_person">Search by name</string>
     <string name="search">Search</string>
     <string name="zero_phones_quantity">There are no entries in the phone book</string>
-    <string name="phones_quantity">Open all entries (%1$d)</string>
+    <string name="chosen_quantity">Chosen</string>
+    <string name="phones_quantity">All entries (%1$d)</string>
+    <string name="last_phones">Last</string>
     <string name="empty_fields">Not all fields are filled!</string>
     <string name="person_exist">This person is already in the phone book!</string>
     <string name="person_phone_exist">This person and this number are already in the phone book!</string>
@@ -32,4 +34,6 @@
     <string name="yes">Yes</string>
     <string name="no">Not</string>
     <string name="chosen">Chosen</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
