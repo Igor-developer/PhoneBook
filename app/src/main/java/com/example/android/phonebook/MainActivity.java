@@ -2,7 +2,6 @@ package com.example.android.phonebook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {

@@ -12,7 +12,7 @@
     <string name="search_person">Search by name</string>
     <string name="search">Search</string>
     <string name="zero_phones_quantity">There are no entries in the phone book</string>
-    <string name="chosen_quantity">Chosen</string>
+    <string name="chosen">Chosen</string>
     <string name="phones_quantity">All entries (%1$d)</string>
     <string name="last_phones">Last</string>
     <string name="empty_fields">Not all fields are filled!</string>
@@ -28,12 +28,8 @@
     <string name="call">Call</string>
     <string name="empty_name_field">The field is not filled!</string>
     <string name="request_results">Search results for the query «%1$s»:</string>
-    <string name="entries">All entries:</string>
     <string name="remove_entry_title">Delete entry</string>
     <string name="remove_entry_message">Delete entry\n%1$s - %2$s ?</string>
     <string name="yes">Yes</string>
     <string name="no">Not</string>
-    <string name="chosen">Chosen</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

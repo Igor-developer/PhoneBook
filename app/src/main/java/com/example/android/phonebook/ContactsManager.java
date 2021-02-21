@@ -1,6 +1,7 @@
 package com.example.android.phonebook;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public final class ContactsManager {
@@ -41,6 +42,20 @@ public final class ContactsManager {
         return findings;
     }
 
+    //Поиск всех записей в зависимости от того входит в избранные или нет
+    public List<Entry> selectByChoosen(boolean isChosen) {
+        List<Entry> findings = new ArrayList<>();
+        for (int i = 0; i < contactList.size(); i++) {
+            Entry entry = contactList.get(i);
+            entry.listIndex = i;    //установка "оригинального" индекса
+            if (entry.choosen == isChosen) {
+                findings.add(entry);
+            }
+        }
+
+        return findings;
+    }
+
     //Получение записи по имени человека
     public Entry getEntry(String name) {
         for (Entry i : contactList) {
@@ -63,13 +78,17 @@ public final class ContactsManager {
 
     //Добавление записи
     public void addEntry(String name, String phone) {
-        contactList.add(new Entry(name, phone));
+        Entry entry = new Entry(name, phone);
+        entry.addTime = new Date().getTime();
+        contactList.add(entry);
     }
 
+    //Переписывание записи
     public void replaceEntry(int index, Entry replacement) {
         contactList.set(index, replacement);
     }
 
+    //Удаление записи
     public void removeEntry(int index) {
         contactList.remove(index);
     }
@@ -79,6 +98,7 @@ public final class ContactsManager {
         private String person;
         private String phone;
         private boolean choosen;
+        private long addTime;
         private int listIndex;
 
         public Entry(String person, String phone) {
@@ -100,6 +120,10 @@ public final class ContactsManager {
 
         public boolean isChoosen() {
             return choosen;
+        }
+
+        public long getAddTime() {
+            return addTime;
         }
 
         public void setChoosen(boolean choosen) {

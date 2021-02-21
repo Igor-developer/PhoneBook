@@ -17,10 +17,11 @@
     </style>
 
     <style name="info_button_style">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:background">@color/grey_light</item>
+        <item name="android:background">@color/white</item>
         <item name="android:textSize">@dimen/info_buttons_text_size</item>
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
@@ -30,17 +31,6 @@
     <style name="count_phones_fragment_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="border_style">
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">@dimen/default_border_thickness</item>
-        <item name="android:layout_marginTop">@dimen/default_margin</item>
-        <item name="android:layout_marginStart">@dimen/default_margin</item>
-        <item name="android:layout_marginEnd">@dimen/default_margin</item>
-        <item name="android:background">@color/black</item>
     </style>
 
     <style name="button_go_to_form_style">
@@ -151,6 +141,7 @@
     </style>
 
     <style name="request_view_style">
+        <item name="android:visibility">gone</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_horizontal</item>

@@ -10,20 +10,52 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
+import java.util.Comparator;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private List<ContactsManager.Entry> contacts; //выборка по поиску
-    String request;
+    private List<ContactsManager.Entry> contacts; // результаты выборки по поиску или условию
+    private String request;
+    private int actionType;
 
-    public RecyclerViewAdapter(String request) {
+    public RecyclerViewAdapter(String request, int actionType) {
         this.request = request;
+        this.actionType = actionType;
+
         updateContactList();
     }
 
+    //Обновление результатов выборки по поиску или условию
     public void updateContactList() {
-        this.contacts = ContactsManager.getInstance().findEntries(request);
+        Comparator<ContactsManager.Entry> comparator =
+                (o1, o2) -> o1.getPerson().compareTo(o2.getPerson());
+
+        if (request != null) {
+            this.contacts = ContactsManager.getInstance().findEntries(request);
+            contacts.sort(comparator);
+        } else if (actionType != -1) {
+            switch (actionType) {
+                case RecyclerViewActivity.CHOSEN_BUTTON:
+                    this.contacts = ContactsManager.getInstance().selectByChoosen(true);
+                    contacts.sort(comparator);
+                    break;
+                case RecyclerViewActivity.INFO_BUTTON:
+                    this.contacts = ContactsManager.getInstance().findEntries(null);
+                    contacts.sort(comparator);
+                    break;
+                case RecyclerViewActivity.LAST_ENTRIES_BUTTON:
+                    this.contacts = ContactsManager.getInstance().findEntries(null);
+                    contacts.sort((o1, o2) -> Long.compare(o2.getAddTime(), o1.getAddTime()));
+                    break;
+            }
+        }
+    }
+
+    public void updateContactList(int actionType) {
+        this.actionType = actionType;
+
+        updateContactList();
     }
 
     //Накачиваем лейаут и создаём ViewHolder
@@ -115,6 +147,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                     Toast.LENGTH_SHORT).show();
                             updateContactList();
                             notifyDataSetChanged();
+                            //Обновление уведомления о количестве записей в телефонной книге
+                            ((RecyclerViewActivity) context).getCountPhonesFragment().showQuantityButtons();
                         })
                         .setNegativeButton(R.string.no, (dialog, which) -> {
                         });
@@ -128,7 +162,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 ContactsManager.Entry real_entry =
                         ContactsManager.getInstance().getEntry(original_index);
                 real_entry.setChoosen(!real_entry.isChoosen());
-                notifyItemChanged(position);
+                updateContactList();
+                notifyDataSetChanged();
             });
 
             //Слушатель для кнопки позвонить

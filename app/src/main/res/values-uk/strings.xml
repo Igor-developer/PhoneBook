@@ -12,7 +12,7 @@
     <string name="search_person">Пошук за ім\'ям</string>
     <string name="search">Шукати</string>
     <string name="zero_phones_quantity">В телефонній книзі немає записів</string>
-    <string name="chosen_quantity">Обрані</string>
+    <string name="chosen">Обрані</string>
     <string name="phones_quantity">Всі записи (%1$d)</string>
     <string name="last_phones">Останні</string>
     <string name="empty_fields">Не всі поля заповнені!</string>
@@ -28,10 +28,8 @@
     <string name="call">Зателефонувати</string>
     <string name="empty_name_field">Поле не заповнене!</string>
     <string name="request_results">Результати пошуку за запитом «%1$s»:</string>
-    <string name="entries">Всі записи:</string>
     <string name="remove_entry_title">Видалення запису</string>
     <string name="remove_entry_message">Видалити запис\n%1$s - %2$s ?</string>
     <string name="yes">Так</string>
     <string name="no">Ні</string>
-    <string name="chosen">Вибраний</string>
 </resources>

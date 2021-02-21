@@ -11,9 +11,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Заголовок запроса (по умолчанию не виден) -->
         <TextView
             android:id="@+id/request_view"
             style="@style/request_view_style" />
+
+        <!-- Контейнер для фрагмента с кнопками: избранные, все записи и последние -->
+        <FrameLayout
+            android:id="@+id/count_phones_fragment"
+            style="@style/count_phones_fragment_style" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
