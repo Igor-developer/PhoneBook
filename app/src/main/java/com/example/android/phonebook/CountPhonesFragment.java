@@ -60,9 +60,15 @@ public class CountPhonesFragment extends Fragment {
                 break;
         }
 
-        //Назначение слушателей кнопкам
-        //в зависимости от прикрепления кнопки к MainActivity или RecyclerViewActivity
+
+        //Логика в зависимости от прикрепления кнопки к MainActivity или RecyclerViewActivity
         if (getActivity().getClass() == MainActivity.class) {
+            //Исправление ошибки Android - невозможности задать textStyle шрифта для кнопки
+            chosen_info_button.setTypeface(null, Typeface.NORMAL);
+            info_button.setTypeface(null, Typeface.NORMAL);
+            last_entries_info_button.setTypeface(null, Typeface.NORMAL);
+
+            //Назначение слушателей кнопкам
             chosen_info_button.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), RecyclerViewActivity.class);
                 intent.putExtra(RecyclerViewActivity.BUTTON, RecyclerViewActivity.CHOSEN_BUTTON);

@@ -126,10 +126,8 @@ public class EditFormFragment extends Fragment {
         }
 
         //Замена записи в телефонной книге
-        ContactsManager.Entry replacement =
-                new ContactsManager.Entry(nameView.getText().toString(),
-                        phoneView.getText().toString());
-        contactsManager.replaceEntry(originalIndex, replacement);
+        contactsManager.replaceEntry(originalIndex,
+                nameView.getText().toString(), phoneView.getText().toString());
 
         //Вывод Toast сообщения о изменении записи
         Toast.makeText(getActivity(), getString(R.string.record_changed, name, phone),

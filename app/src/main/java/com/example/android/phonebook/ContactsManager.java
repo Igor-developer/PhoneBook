@@ -84,8 +84,10 @@ public final class ContactsManager {
     }
 
     //Переписывание записи
-    public void replaceEntry(int index, Entry replacement) {
-        contactList.set(index, replacement);
+    public void replaceEntry(int index, String person, String phone) {
+        Entry entry = getEntry(index);
+        entry.setPerson(person);
+        entry.setPhone(phone);
     }
 
     //Удаление записи
@@ -124,6 +126,14 @@ public final class ContactsManager {
 
         public long getAddTime() {
             return addTime;
+        }
+
+        public void setPerson(String person) {
+            this.person = person;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
         }
 
         public void setChoosen(boolean choosen) {

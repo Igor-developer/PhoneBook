@@ -6,4 +6,5 @@
     <dimen name="info_buttons_text_size">14sp</dimen>
     <dimen name="side_margin">20dp</dimen>
     <dimen name="default_border_thickness">2dp</dimen>
+    <dimen name="recyclerview_imagebutton_size">40dp</dimen>
 </resources>

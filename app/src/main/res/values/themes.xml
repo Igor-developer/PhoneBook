@@ -23,6 +23,7 @@
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:background">@color/white</item>
         <item name="android:textSize">@dimen/info_buttons_text_size</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:padding">@dimen/default_margin</item>
@@ -115,8 +116,8 @@
     </style>
 
     <style name="recyclerview_button_style">
-        <item name="android:layout_width">30dp</item>
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">@dimen/recyclerview_imagebutton_size</item>
+        <item name="android:layout_height">@dimen/recyclerview_imagebutton_size</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:layout_marginStart">@dimen/default_margin</item>
