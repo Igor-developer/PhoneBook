@@ -6,8 +6,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 //Занятие 8.
-//В приложение PhoneBook добавить ViewPager с TabLayout. Реализовать три таба:
-//"Избранные", "Все контакты" и "Последние".
+//В приложение PhoneBook интегрировать Room и хранить контакты в ней.
 
     CountPhonesFragment countPhonesFragment;
 

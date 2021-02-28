@@ -2,13 +2,18 @@ package com.example.android.phonebook;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.android.phonebook.sqlite.DBHelper;
+import com.example.android.phonebook.sqlite.SQLiteContactsManager;
 
 public class SearchFormFragment extends Fragment {
 
@@ -37,8 +42,6 @@ public class SearchFormFragment extends Fragment {
 
         TextView notification_view = getActivity().findViewById(R.id.notification);
 
-        final ContactsManager contacts_manager = ContactsManager.getInstance();
-
         //Заполнено ли поле поиска
         if (name.isEmpty()) {
             notification_view.setText(R.string.empty_name_field);
@@ -49,7 +52,7 @@ public class SearchFormFragment extends Fragment {
         name_view.setText(R.string.space);
 
         //Поиск записи в телефонной книге
-        if (contacts_manager.findEntries(name).isEmpty()) {
+        if (SQLiteContactsManager.getInstance().findEntries(name).isEmpty()) {
             notification_view.setText(getString(R.string.zero_person_phones, name));
         } else {
             notification_view.setText(R.string.space);

@@ -10,9 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.phonebook.sqlite.DBHelper;
+import com.example.android.phonebook.sqlite.SQLiteContactsManager;
+
 public class AddFormFragment extends Fragment {
 
-    private ContactsManager contactsManager;
+    private SQLiteContactsManager sQLiteContactsManager;
     private EditText nameView;
     private EditText phoneView;
     private TextView notificationView;
@@ -27,7 +30,7 @@ public class AddFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_form, container, false);
 
-        contactsManager = ContactsManager.getInstance();
+        sQLiteContactsManager = SQLiteContactsManager.getInstance();
 
         //Получение необходимых View
         nameView = view.findViewById(R.id.name);
@@ -55,7 +58,7 @@ public class AddFormFragment extends Fragment {
         }
 
         //Проверка на дубликаты
-        ContactsManager.Entry entry = contactsManager.getEntry(name);
+        SQLiteContactsManager.Entry entry = sQLiteContactsManager.getEntry(name);
         if (entry != null) {
             notificationView.setText(
                     entry.getPhone().equals(phone) ?
@@ -65,7 +68,7 @@ public class AddFormFragment extends Fragment {
         }
 
         //Добавление записи в телефонную книгу
-        contactsManager.addEntry(name, phone);
+        sQLiteContactsManager.addEntry(name, phone);
 
         //Вывод Toast сообщения о создании записи
         Toast.makeText(getActivity(), getString(R.string.record_created, name, phone),

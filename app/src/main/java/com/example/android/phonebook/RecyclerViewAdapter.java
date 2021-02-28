@@ -6,63 +6,58 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android.phonebook.sqlite.SQLiteContactsManager;
+
 import java.util.Comparator;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private List<ContactsManager.Entry> contacts; // результаты выборки по поиску или условию
+    private SQLiteContactsManager sQLiteContactsManager;
+
+    //результаты выборки по поиску или условию
+    private List<SQLiteContactsManager.Entry> contactsRetrieval;
+
     private String request;
     private int actionType;
 
     public RecyclerViewAdapter(String request, int actionType) {
         this.request = request;
         this.actionType = actionType;
+        sQLiteContactsManager = SQLiteContactsManager.getInstance();
 
-        updateContactList();
+        updateRetrieval();
     }
 
     //Обновление результатов выборки по поиску или условию
-    public void updateContactList() {
-        Comparator<ContactsManager.Entry> comparator =
-                (o1, o2) -> o1.getPerson().compareTo(o2.getPerson());
-
+    public void updateRetrieval() {
         if (request != null) {
-            this.contacts = ContactsManager.getInstance().findEntries(request);
-            contacts.sort(comparator);
-        } else if (actionType != -1) {
-            switch (actionType) {
-                case RecyclerViewActivity.CHOSEN_BUTTON:
-                    this.contacts = ContactsManager.getInstance().selectByChoosen(true);
-                    contacts.sort(comparator);
-                    break;
-                case RecyclerViewActivity.INFO_BUTTON:
-                    this.contacts = ContactsManager.getInstance().findEntries(null);
-                    contacts.sort(comparator);
-                    break;
-                case RecyclerViewActivity.LAST_ENTRIES_BUTTON:
-                    this.contacts = ContactsManager.getInstance().findEntries(null);
-                    contacts.sort((o1, o2) -> Long.compare(o2.getAddTime(), o1.getAddTime()));
-                    break;
-            }
+            contactsRetrieval = sQLiteContactsManager.findEntries(request);
+        } else if (actionType == RecyclerViewActivity.CHOSEN_BUTTON) {
+            contactsRetrieval = sQLiteContactsManager.selectByChosen(true);
+        } else if (actionType == RecyclerViewActivity.INFO_BUTTON) {
+            contactsRetrieval = sQLiteContactsManager.findEntries(null);
+        } else if (actionType == RecyclerViewActivity.LAST_ENTRIES_BUTTON) {
+            contactsRetrieval = sQLiteContactsManager.findLastEntries(10);
         }
     }
 
-    public void updateContactList(int actionType) {
+    public void updateRetrieval(int actionType) {
         this.actionType = actionType;
 
-        updateContactList();
+        updateRetrieval();
     }
 
     //Накачиваем лейаут и создаём ViewHolder
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View inflate = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.rv_element, parent, false);
@@ -80,7 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //В методе нужно указать количество элементов RecyclerView
     @Override
     public int getItemCount() {
-        return contacts.size();
+        return contactsRetrieval.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -109,11 +104,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private void bind(int position) {
 
             RecyclerViewActivity context = (RecyclerViewActivity) itemView.getContext();
-            ContactsManager.Entry entry = contacts.get(position);
+            SQLiteContactsManager.Entry entry = contactsRetrieval.get(position);
             String person = entry.getPerson();
             String phone = entry.getPhone();
 
-            int original_index = entry.getListIndex();
+            int id = entry.getEntryId();
             this.person.setText(person);
             this.telephone.setText(phone);
             this.choosenButton.setBackgroundResource(entry.isChoosen() ?
@@ -124,7 +119,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 EditFormFragment edit_form_fragment = EditFormFragment.newInstance();
 
                 Bundle bundle = new Bundle();
-                bundle.putInt(EditFormFragment.ORIGINAL_INDEX, original_index);
+                bundle.putInt(EditFormFragment.ID, id);
                 edit_form_fragment.setArguments(bundle);
                 context.getSupportFragmentManager()
                         .beginTransaction()
@@ -141,14 +136,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 phone))
                         .setIcon(android.R.drawable.ic_delete)
                         .setPositiveButton(R.string.yes, (dialog, which) -> {
-                            ContactsManager.getInstance().removeEntry(original_index);
+                            sQLiteContactsManager.removeEntry(id);
                             Toast.makeText(context,
                                     context.getString(R.string.record_removed, person, phone),
                                     Toast.LENGTH_SHORT).show();
-                            updateContactList();
+                            updateRetrieval();
                             notifyDataSetChanged();
-                            //Обновление уведомления о количестве записей в телефонной книге
-                            ((RecyclerViewActivity) context).getCountPhonesFragment().showQuantityButtons();
+                            //обновление уведомления о количестве записей в телефонной книге
+                            context.getCountPhonesFragment().showQuantityButtons();
                         })
                         .setNegativeButton(R.string.no, (dialog, which) -> {
                         });
@@ -159,10 +154,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             //Слушатель для кнопки добавить и удалить из избранного
             choosenButton.setOnClickListener(v -> {
-                ContactsManager.Entry real_entry =
-                        ContactsManager.getInstance().getEntry(original_index);
-                real_entry.setChoosen(!real_entry.isChoosen());
-                updateContactList();
+                sQLiteContactsManager.setChosen(!sQLiteContactsManager.getEntry(id).isChoosen(), id);
+                updateRetrieval();
                 notifyDataSetChanged();
             });
 

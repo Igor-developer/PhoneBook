@@ -1,9 +1,11 @@
 package com.example.android.phonebook;
 
 import android.os.Bundle;
+
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +13,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.phonebook.sqlite.SQLiteContactsManager;
+
 public class EditFormFragment extends Fragment {
 
-    public static final String ORIGINAL_INDEX = "ORIGINAL_INDEX";
-    private int originalIndex;
-    private ContactsManager contactsManager;
+    public static final String ID = "ID";
+    private int id;
+    private SQLiteContactsManager sQLiteContactsManager;
     private RecyclerViewAdapter adapter;
     private EditText nameView;
     private EditText phoneView;
@@ -33,7 +37,7 @@ public class EditFormFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            originalIndex = getArguments().getInt(ORIGINAL_INDEX);
+            id = getArguments().getInt(ID);
         }
     }
 
@@ -42,7 +46,7 @@ public class EditFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_form, container, false);
 
-        contactsManager = ContactsManager.getInstance();
+        sQLiteContactsManager = SQLiteContactsManager.getInstance();
 
         adapter = (RecyclerViewAdapter)
                 ((RecyclerView) getActivity().findViewById(R.id.recyclerview)).getAdapter();
@@ -54,12 +58,11 @@ public class EditFormFragment extends Fragment {
         darkening = getActivity().findViewById(R.id.darkening);
 
         //- извлечь и отобразить значения полей
-        nameView.setText(contactsManager.getEntry(originalIndex).getPerson());
-        phoneView.setText(contactsManager.getEntry(originalIndex).getPhone());
+        nameView.setText(sQLiteContactsManager.getEntry(id).getPerson());
+        phoneView.setText(sQLiteContactsManager.getEntry(id).getPhone());
 
         //- перехватить нажатия, чтобы не срабатывал нижележащий слой RecyclerView
-        darkening.setOnClickListener(v -> {
-        });
+        darkening.setOnClickListener(v -> {});
 
         //- установить слушателей кнопкам
         AppCompatButton addButton = view.findViewById(R.id.add_button);
@@ -105,19 +108,19 @@ public class EditFormFragment extends Fragment {
 
     //Обработчик для кнопки addButton
     private void handleAddButton() {
-        String name = nameView.getText().toString().trim();
+        String person = nameView.getText().toString().trim();
         String phone = phoneView.getText().toString().trim();
 
         //Заполнены ли все поля
-        if (name.isEmpty() || phone.isEmpty()) {
+        if (person.isEmpty() || phone.isEmpty()) {
             notificationView.setText(R.string.empty_fields);
             return;
         }
 
-
         //Проверка на дубликаты
-        ContactsManager.Entry entry = contactsManager.getEntry(name);
-        if (entry != null && entry != contactsManager.getEntry(originalIndex)) {
+        SQLiteContactsManager.Entry entry = sQLiteContactsManager.getEntry(person);
+        if (entry != null && entry.getPerson().equals(person)
+                && id != entry.getEntryId()) {  //и не является текущей редактируемой записью
             notificationView.setText(
                     entry.getPhone().equals(phone) ?
                             R.string.person_phone_exist :
@@ -126,15 +129,15 @@ public class EditFormFragment extends Fragment {
         }
 
         //Замена записи в телефонной книге
-        contactsManager.replaceEntry(originalIndex,
+        sQLiteContactsManager.replaceEntry(id,
                 nameView.getText().toString(), phoneView.getText().toString());
 
         //Вывод Toast сообщения о изменении записи
-        Toast.makeText(getActivity(), getString(R.string.record_changed, name, phone),
+        Toast.makeText(getActivity(), getString(R.string.record_changed, person, phone),
                 Toast.LENGTH_SHORT).show();
 
         //Обновление RecyclerView
-        adapter.updateContactList();
+        adapter.updateRetrieval();
         adapter.notifyDataSetChanged();
 
         //Удаление фрагмента

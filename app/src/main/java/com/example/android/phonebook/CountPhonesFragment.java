@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.android.phonebook.sqlite.SQLiteContactsManager;
 
 public class CountPhonesFragment extends Fragment {
 
-    View view;
+    private View view;
 
-    AppCompatButton chosen_info_button;
-    AppCompatButton info_button;
-    AppCompatButton last_entries_info_button;
+    private AppCompatButton chosen_info_button;
+    private AppCompatButton info_button;
+    private AppCompatButton last_entries_info_button;
 
     int buttonType;
 
@@ -60,7 +61,6 @@ public class CountPhonesFragment extends Fragment {
                 break;
         }
 
-
         //Логика в зависимости от прикрепления кнопки к MainActivity или RecyclerViewActivity
         if (getActivity().getClass() == MainActivity.class) {
             //Исправление ошибки Android - невозможности задать textStyle шрифта для кнопки
@@ -91,19 +91,19 @@ public class CountPhonesFragment extends Fragment {
                     ((RecyclerView) getActivity().findViewById(R.id.recyclerview)).getAdapter();
 
             chosen_info_button.setOnClickListener(v -> {
-                adapter.updateContactList(RecyclerViewActivity.CHOSEN_BUTTON);
+                adapter.updateRetrieval(RecyclerViewActivity.CHOSEN_BUTTON);
                 adapter.notifyDataSetChanged();
                 buttons_mediator.markButton(chosen_info_button);
             });
 
             info_button.setOnClickListener(v -> {
-                adapter.updateContactList(RecyclerViewActivity.INFO_BUTTON);
+                adapter.updateRetrieval(RecyclerViewActivity.INFO_BUTTON);
                 adapter.notifyDataSetChanged();
                 buttons_mediator.markButton(info_button);
             });
 
             last_entries_info_button.setOnClickListener(v -> {
-                adapter.updateContactList(RecyclerViewActivity.LAST_ENTRIES_BUTTON);
+                adapter.updateRetrieval(RecyclerViewActivity.LAST_ENTRIES_BUTTON);
                 adapter.notifyDataSetChanged();
                 buttons_mediator.markButton(last_entries_info_button);
             });
@@ -125,8 +125,7 @@ public class CountPhonesFragment extends Fragment {
 
     //Отображение кнопок
     public void showQuantityButtons() {
-        //Отображение кнопок
-        int count = ContactsManager.getInstance().getSize();
+        int count = SQLiteContactsManager.getInstance().getSize();
 
         info_button.setText(count == 0 ? getString(R.string.zero_phones_quantity) :
                 getString(R.string.phones_quantity, count));

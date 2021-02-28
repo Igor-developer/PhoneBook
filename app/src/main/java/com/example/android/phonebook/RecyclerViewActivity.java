@@ -35,7 +35,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         }
 
         //Если RecyclerViewActivity вызвана в результате перехода по кнопке
-        if (button_type != -1){
+        if (button_type != -1) {
             countPhonesFragment = CountPhonesFragment.newInstance();
             Bundle bundle = new Bundle();
             bundle.putInt(BUTTON, button_type);
