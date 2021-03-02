@@ -143,7 +143,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             updateRetrieval();
                             notifyDataSetChanged();
                             //обновление уведомления о количестве записей в телефонной книге
-                            context.getCountPhonesFragment().showQuantityButtons();
+                            if (request == null) {
+                                context.getCountPhonesFragment().showQuantityButtons();
+                            }
+                            //если не осталось записей для отображения
+                            //- в поисковом запросе или в базе данных
+                            if ((request != null && contactsRetrieval.size() == 0)
+                                    || sQLiteContactsManager.getSize() == 0) {
+                                context.finish();
+                            }
                         })
                         .setNegativeButton(R.string.no, (dialog, which) -> {
                         });
