@@ -6,31 +6,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.android.phonebook.sqlite.SQLiteContactsManager;
-
-import java.util.Comparator;
+import com.example.android.phonebook.room_db.Entry;
+import com.example.android.phonebook.room_db.PhoneBookDao;
+import com.example.android.phonebook.room_db.RoomSingleton;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private SQLiteContactsManager sQLiteContactsManager;
+    private final PhoneBookDao room;
 
     //результаты выборки по поиску или условию
-    private List<SQLiteContactsManager.Entry> contactsRetrieval;
+    private List<Entry> contactsRetrieval;
 
-    private String request;
+    private final String request;
     private int actionType;
 
     public RecyclerViewAdapter(String request, int actionType) {
         this.request = request;
         this.actionType = actionType;
-        sQLiteContactsManager = SQLiteContactsManager.getInstance();
+        this.room = RoomSingleton.getRoom();
 
         updateRetrieval();
     }
@@ -38,13 +36,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //Обновление результатов выборки по поиску или условию
     public void updateRetrieval() {
         if (request != null) {
-            contactsRetrieval = sQLiteContactsManager.findEntries(request);
+            contactsRetrieval = room.findEntries(request);
         } else if (actionType == RecyclerViewActivity.CHOSEN_BUTTON) {
-            contactsRetrieval = sQLiteContactsManager.selectByChosen(true);
+            contactsRetrieval = room.selectByChosen(true);
         } else if (actionType == RecyclerViewActivity.INFO_BUTTON) {
-            contactsRetrieval = sQLiteContactsManager.findEntries(null);
+            contactsRetrieval = room.getAllEntries();
         } else if (actionType == RecyclerViewActivity.LAST_ENTRIES_BUTTON) {
-            contactsRetrieval = sQLiteContactsManager.findLastEntries(10);
+            contactsRetrieval = room.getLastEntries(10);
         }
     }
 
@@ -79,47 +77,42 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private View itemView;
-        private TextView person;
-        private TextView telephone;
-        private AppCompatImageButton editButton;
-        private AppCompatImageButton deleteButton;
-        private AppCompatImageButton callButton;
-        private AppCompatImageButton choosenButton;
+        private final View itemView;
+        private final TextView personTV;
+        private final TextView telephoneTV;
+        private final AppCompatImageButton editButton;
+        private final AppCompatImageButton deleteButton;
+        private final AppCompatImageButton callButton;
+        private final AppCompatImageButton chosenButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.itemView = itemView;
-
-            this.editButton = itemView.findViewById(R.id.edit_button);
-            this.deleteButton = itemView.findViewById(R.id.delete_button);
-            this.choosenButton = itemView.findViewById(R.id.choosen_button);
-            this.callButton = itemView.findViewById(R.id.call_button);
-
-            this.person = itemView.findViewById(R.id.person);
-            this.telephone = itemView.findViewById(R.id.telephones);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
+            chosenButton = itemView.findViewById(R.id.choosen_button);
+            callButton = itemView.findViewById(R.id.call_button);
+            personTV = itemView.findViewById(R.id.person);
+            telephoneTV = itemView.findViewById(R.id.telephones);
         }
 
         private void bind(int position) {
+            Entry entry = contactsRetrieval.get(position);
+
+            personTV.setText(entry.getPerson());
+            telephoneTV.setText(entry.getPhone());
+            chosenButton.setBackgroundResource(entry.isChosen() ?
+                    R.drawable.ic_star_on_button : R.drawable.ic_star_off_button);
 
             RecyclerViewActivity context = (RecyclerViewActivity) itemView.getContext();
-            SQLiteContactsManager.Entry entry = contactsRetrieval.get(position);
-            String person = entry.getPerson();
-            String phone = entry.getPhone();
-
-            int id = entry.getEntryId();
-            this.person.setText(person);
-            this.telephone.setText(phone);
-            this.choosenButton.setBackgroundResource(entry.isChoosen() ?
-                    R.drawable.ic_star_on_button : R.drawable.ic_star_off_button);
 
             //Слушатель для кнопки редактировать
             editButton.setOnClickListener(v -> {
                 EditFormFragment edit_form_fragment = EditFormFragment.newInstance();
 
                 Bundle bundle = new Bundle();
-                bundle.putInt(EditFormFragment.ID, id);
+                bundle.putInt(EditFormFragment.ID, entry.getId());
                 edit_form_fragment.setArguments(bundle);
                 context.getSupportFragmentManager()
                         .beginTransaction()
@@ -132,13 +125,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(R.string.remove_entry_title)
                         .setMessage(context.getString(R.string.remove_entry_message,
-                                person,
-                                phone))
+                                entry.getPerson(), entry.getPhone()))
                         .setIcon(android.R.drawable.ic_delete)
                         .setPositiveButton(R.string.yes, (dialog, which) -> {
-                            sQLiteContactsManager.removeEntry(id);
+                            room.deleteEntry(entry);
                             Toast.makeText(context,
-                                    context.getString(R.string.record_removed, person, phone),
+                                    context.getString(R.string.record_removed,
+                                            entry.getPerson(), entry.getPhone()),
                                     Toast.LENGTH_SHORT).show();
                             updateRetrieval();
                             notifyDataSetChanged();
@@ -149,7 +142,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             //если не осталось записей для отображения
                             //- в поисковом запросе или в базе данных
                             if ((request != null && contactsRetrieval.size() == 0)
-                                    || sQLiteContactsManager.getSize() == 0) {
+                                    || room.getEntriesCount() == 0) {
                                 context.finish();
                             }
                         })
@@ -161,8 +154,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             });
 
             //Слушатель для кнопки добавить и удалить из избранного
-            choosenButton.setOnClickListener(v -> {
-                sQLiteContactsManager.setChosen(!sQLiteContactsManager.getEntry(id).isChoosen(), id);
+            chosenButton.setOnClickListener(v -> {
+                entry.setChosen(!entry.isChosen());
+                room.updateEntry(entry);
                 updateRetrieval();
                 notifyDataSetChanged();
             });

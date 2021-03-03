@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.android.phonebook.sqlite.SQLiteContactsManager;
+import com.example.android.phonebook.room_db.RoomSingleton;
 
 public class CountPhonesFragment extends Fragment {
 
@@ -125,7 +125,7 @@ public class CountPhonesFragment extends Fragment {
 
     //Отображение кнопок
     public void showQuantityButtons() {
-        int count = SQLiteContactsManager.getInstance().getSize();
+        int count = RoomSingleton.getRoom().getEntriesCount();
 
         info_button.setText(count == 0 ? getString(R.string.zero_phones_quantity) :
                 getString(R.string.phones_quantity, count));

@@ -5,21 +5,22 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.android.phonebook.sqlite.SQLiteContactsManager;
+import com.example.android.phonebook.room_db.Entry;
+import com.example.android.phonebook.room_db.PhoneBookDao;
+import com.example.android.phonebook.room_db.RoomSingleton;
 
 public class EditFormFragment extends Fragment {
 
     public static final String ID = "ID";
     private int id;
-    private SQLiteContactsManager sQLiteContactsManager;
+    private Entry entry;
+    private PhoneBookDao room;
     private RecyclerViewAdapter adapter;
     private EditText nameView;
     private EditText phoneView;
@@ -46,7 +47,7 @@ public class EditFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_form, container, false);
 
-        sQLiteContactsManager = SQLiteContactsManager.getInstance();
+        room = RoomSingleton.getRoom();
 
         adapter = (RecyclerViewAdapter)
                 ((RecyclerView) getActivity().findViewById(R.id.recyclerview)).getAdapter();
@@ -58,8 +59,9 @@ public class EditFormFragment extends Fragment {
         darkening = getActivity().findViewById(R.id.darkening);
 
         //- извлечь и отобразить значения полей
-        nameView.setText(sQLiteContactsManager.getEntry(id).getPerson());
-        phoneView.setText(sQLiteContactsManager.getEntry(id).getPhone());
+        entry = this.room.getEntry(id);
+        nameView.setText(entry.getPerson());
+        phoneView.setText(entry.getPhone());
 
         //- перехватить нажатия, чтобы не срабатывал нижележащий слой RecyclerView
         darkening.setOnClickListener(v -> {});
@@ -118,19 +120,20 @@ public class EditFormFragment extends Fragment {
         }
 
         //Проверка на дубликаты
-        SQLiteContactsManager.Entry entry = sQLiteContactsManager.getEntry(person);
-        if (entry != null && entry.getPerson().equals(person)
-                && id != entry.getEntryId()) {  //и не является текущей редактируемой записью
+        Entry detected_entry = room.getEntry(person);
+        if (detected_entry != null && detected_entry.getPerson().equals(person)
+                && id != detected_entry.getId()) {  //и не является текущей редактируемой записью
             notificationView.setText(
-                    entry.getPhone().equals(phone) ?
+                    detected_entry.getPhone().equals(phone) ?
                             R.string.person_phone_exist :
                             R.string.person_exist);
             return;
         }
 
-        //Замена записи в телефонной книге
-        sQLiteContactsManager.replaceEntry(id,
-                nameView.getText().toString(), phoneView.getText().toString());
+        //Обновление записи в телефонной книге
+        entry.setPerson(person);
+        entry.setPhone(phone);
+        room.updateEntry(entry);
 
         //Вывод Toast сообщения о изменении записи
         Toast.makeText(getActivity(), getString(R.string.record_changed, person, phone),

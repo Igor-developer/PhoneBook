@@ -1,18 +1,22 @@
 package com.example.android.phonebook;
 
 import android.app.Application;
-
-import com.example.android.phonebook.sqlite.DBHelper;
-import com.example.android.phonebook.sqlite.SQLiteContactsManager;
+import androidx.room.Room;
+import com.example.android.phonebook.room_db.PhoneBookDao;
+import com.example.android.phonebook.room_db.PhoneBookDatabase;
+import com.example.android.phonebook.room_db.RoomSingleton;
 
 public class MyApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();
 
-        //Инциализация базы данных SQLite
-        SQLiteContactsManager.init(new DBHelper(getApplicationContext()));
+        //Инициализация базы данных Room
+        PhoneBookDao room = Room.databaseBuilder(getApplicationContext(),
+                PhoneBookDatabase.class, "room").allowMainThreadQueries().build()
+                .getPhoneBookDao();
+
+        RoomSingleton.init(room);
     }
-
-
 }
