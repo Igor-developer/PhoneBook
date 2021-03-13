@@ -32,4 +32,5 @@
     <string name="remove_entry_message">Видалити запис\n%1$s - %2$s ?</string>
     <string name="yes">Так</string>
     <string name="no">Ні</string>
+    <string name="no_resolve_activity">Помилка! Додатки для телефоних викликів не виявлені!</string>
 </resources>

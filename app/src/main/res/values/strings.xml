@@ -32,4 +32,5 @@
     <string name="remove_entry_message">Delete entry\n%1$s - %2$s ?</string>
     <string name="yes">Yes</string>
     <string name="no">Not</string>
+    <string name="no_resolve_activity">Error! No phone call apps found!</string>
 </resources>

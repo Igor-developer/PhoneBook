@@ -32,4 +32,5 @@
     <string name="remove_entry_message">Удалить запись\n%1$s - %2$s ?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="no_resolve_activity">Ошибка! Приложения для телефонных вызовов не обнаружены!</string>
 </resources>

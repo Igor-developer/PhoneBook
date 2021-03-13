@@ -1,18 +1,24 @@
 package com.example.android.phonebook;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.android.phonebook.room_db.Entry;
 import com.example.android.phonebook.room_db.PhoneBookDao;
 import com.example.android.phonebook.room_db.RoomSingleton;
+
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -163,7 +169,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             //Слушатель для кнопки позвонить
             callButton.setOnClickListener(v -> {
-
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + entry.getPhone()));
+                try {
+                    context.startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(context, context.getString(R.string.no_resolve_activity),
+                            Toast.LENGTH_SHORT).show();
+                }
             });
         }
     }

@@ -5,8 +5,8 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-//Занятие 8.
-//В приложении PhoneBook интегрировать Room и хранить контакты в ней.
+//Занятие 10.
+//В приложении PhoneBook сделать возможность перехода к звонку по нажатию кнопки.
 
     CountPhonesFragment countPhonesFragment;
 
